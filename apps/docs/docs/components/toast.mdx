@@ -1,0 +1,38 @@
+---
+id: toast
+title: Toast
+sidebar_position: 9
+---
+
+import { Toast } from '@vendys/ui';
+import { ToastDemo } from '@site/src/components/Demos';
+
+# Toast
+
+작업 결과를 짧게 알립니다. 문구는 과거형 한 문장입니다: "저장되었습니다".
+하단 중앙에 띄우고 3초 뒤 제거합니다.
+
+<div className="demo">
+  <Toast>저장되었습니다</Toast>
+  <Toast tone="error">저장하지 못했습니다</Toast>
+  <ToastDemo />
+</div>
+
+```tsx
+// 하단 중앙 고정이 필요하면 viewport 컨테이너 안에 렌더링
+<div className="vd-toast-viewport">
+  <Toast>저장되었습니다</Toast>
+</div>
+```
+
+## Props
+
+| prop | 타입 | 기본값 | 설명 |
+|---|---|---|---|
+| `tone` | `'success' \| 'error'` | `'success'` | 초록 점 / 빨간 점 |
+
+`role="status"`가 적용되어 스크린리더에 자동으로 읽힙니다.
+
+## 규칙
+
+- 확인 버튼이 필요한 내용(되돌릴 수 없는 실패 등)은 토스트가 아니라 모달을 씁니다.

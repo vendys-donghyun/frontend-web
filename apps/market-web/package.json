@@ -13,7 +13,8 @@
   "dependencies": {
     "react": "catalog:react19",
     "react-dom": "catalog:react19",
-    "@vendys/ui": "workspace:*"
+    "@vendys/ui": "workspace:*",
+    "@vendys/tokens": "workspace:*"
   },
   "devDependencies": {
     "vite": "catalog:",

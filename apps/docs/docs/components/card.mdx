@@ -1,0 +1,35 @@
+---
+id: card
+title: Card
+sidebar_position: 6
+---
+
+import { Card, Badge } from '@vendys/ui';
+
+# Card
+
+보더가 기본이고 그림자는 없습니다. 패딩은 Desktop 20px / Mobile 16px입니다.
+클릭해서 뜨는 패널처럼 떠 있는 요소에만 `elevated`로 subtle 그림자를 적용합니다.
+
+<div className="demo">
+  <Card style={{ width: 240 }}>
+    <div style={{ fontSize: 13, color: 'var(--vd-text-sub)', marginBottom: 4 }}>이번 달 정산</div>
+    <div style={{ fontSize: 22, fontWeight: 700 }}>1,240,000원</div>
+    <div style={{ marginTop: 8 }}><Badge tone="success">정산 완료</Badge></div>
+  </Card>
+  <Card elevated style={{ width: 240 }}>
+    <div style={{ fontWeight: 600, marginBottom: 4 }}>elevated 카드</div>
+    <div style={{ fontSize: 13.5, color: 'var(--vd-text-sub)' }}>떠 있는 패널에만 씁니다</div>
+  </Card>
+</div>
+
+```tsx
+<Card>내용</Card>
+<Card elevated>떠 있는 패널</Card>
+```
+
+## Props
+
+| prop | 타입 | 기본값 | 설명 |
+|---|---|---|---|
+| `elevated` | `boolean` | `false` | subtle 그림자 적용 |

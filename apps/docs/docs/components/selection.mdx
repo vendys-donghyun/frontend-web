@@ -1,0 +1,46 @@
+---
+id: selection
+title: Checkbox · Radio
+sidebar_position: 3
+---
+
+import { Checkbox, Radio } from '@vendys/ui';
+
+# Checkbox · Radio
+
+라벨을 포함해 전체가 클릭·터치 영역입니다.
+
+## Checkbox
+
+여러 개를 동시에 선택할 수 있을 때 씁니다.
+
+<div className="demo demo--col" style={{ gap: 4 }}>
+  <Checkbox defaultChecked>이용약관에 동의합니다</Checkbox>
+  <Checkbox>마케팅 수신에 동의합니다 (선택)</Checkbox>
+  <Checkbox disabled>비활성 항목</Checkbox>
+</div>
+
+```tsx
+<Checkbox checked={agreed} onChange={(e) => setAgreed(e.target.checked)}>
+  이용약관에 동의합니다
+</Checkbox>
+```
+
+## Radio
+
+하나만 선택할 수 있을 때 씁니다. 같은 그룹은 `name`으로 묶습니다.
+
+<div className="demo demo--col" style={{ gap: 4 }}>
+  <Radio name="cycle-demo" defaultChecked>매월 정산</Radio>
+  <Radio name="cycle-demo">매주 정산</Radio>
+</div>
+
+```tsx
+<Radio name="cycle" value="month" checked={cycle === 'month'} onChange={...}>매월 정산</Radio>
+<Radio name="cycle" value="week" checked={cycle === 'week'} onChange={...}>매주 정산</Radio>
+```
+
+## Props
+
+`input` 기본 속성(`checked`, `onChange`, `name`, `value`, `disabled` 등)을 그대로 받고,
+`children`이 라벨이 됩니다. `ref` 전달을 지원합니다.

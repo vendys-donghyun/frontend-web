@@ -1,0 +1,81 @@
+/**
+ * 현대벤디스 디자인 토큰 v0.2
+ * 원천 문서: packages/tokens/DESIGN.md
+ * 규칙: UI를 만들 때 이 변수만 사용한다. 임의의 색·크기·그림자 값 생성 금지.
+ */
+:root {
+  /* ---- 브랜드 ---- */
+  --vd-primary: #43a047;
+  --vd-primary-hover: #388e3c;
+  --vd-primary-active: #2e7d32;
+  --vd-primary-tint: #e8f5e9;
+  --vd-primary-tint-hover: #c8e6c9;
+  --vd-on-primary: #ffffff;
+
+  /* ---- 그레이 (Material Gray) ---- */
+  --vd-gray-50: #fafafa;
+  --vd-gray-100: #f5f5f5;
+  --vd-gray-200: #eeeeee;
+  --vd-gray-300: #e0e0e0;
+  --vd-gray-400: #bdbdbd;
+  --vd-gray-500: #9e9e9e;
+  --vd-gray-600: #757575;
+  --vd-gray-700: #616161;
+  --vd-gray-800: #424242;
+  --vd-gray-900: #212121;
+
+  /* ---- 시맨틱 텍스트/면 ---- */
+  --vd-text: var(--vd-gray-900);
+  --vd-text-sub: var(--vd-gray-700);
+  --vd-text-disabled: var(--vd-gray-500);
+  --vd-border: var(--vd-gray-300);
+  --vd-border-subtle: var(--vd-gray-200);
+  --vd-bg: #ffffff;
+  --vd-surface: var(--vd-gray-100);
+
+  /* ---- 상태 색 (success는 primary 재사용) ---- */
+  --vd-error: #d32f2f;
+  --vd-error-tint: #fdecea;
+  --vd-warning: #f57c00;
+  --vd-warning-tint: #fff3e0;
+  --vd-warning-text: #b45309;
+  --vd-info: #1976d2;
+  --vd-info-tint: #e3f2fd;
+
+  /* ---- 타이포그래피 ---- */
+  --vd-font: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont,
+    'Apple SD Gothic Neo', 'Malgun Gothic', '맑은 고딕', sans-serif;
+  --vd-letter-spacing: -0.2px;
+
+  /* ---- 간격 (4px 그리드) ---- */
+  --vd-space-1: 4px;
+  --vd-space-2: 8px;
+  --vd-space-3: 12px;
+  --vd-space-4: 16px;
+  --vd-space-5: 20px;
+  --vd-space-6: 24px;
+  --vd-space-8: 32px;
+  --vd-space-10: 40px;
+  --vd-space-12: 48px;
+  --vd-space-16: 64px;
+
+  /* ---- 모서리 (버튼은 크기 비례: sm·md 8, lg 12) ---- */
+  --vd-radius-sm: 4px;
+  --vd-radius-md: 8px;
+  --vd-radius-lg: 12px;
+  --vd-radius-xl: 16px;
+  --vd-radius-full: 9999px;
+
+  /* ---- 그림자 (떠 있는 요소에만) ---- */
+  --vd-shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --vd-shadow-standard: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --vd-shadow-prominent: 0 8px 24px rgba(0, 0, 0, 0.14);
+
+  /* ---- 포커스 링 ---- */
+  --vd-focus-ring: 0 0 0 2px rgba(67, 160, 71, 0.18);
+
+  /* ---- 컨트롤 높이 (Desktop / Mobile) ---- */
+  --vd-control-sm: 32px;
+  --vd-control-md: 40px;
+  --vd-control-lg: 48px;
+}

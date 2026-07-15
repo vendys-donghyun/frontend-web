@@ -1,6 +1,6 @@
 {
-  "name": "@vendys/ui",
-  "version": "0.0.0",
+  "name": "@vendys/tokens",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "main": "./dist/index.cjs",
@@ -12,26 +12,18 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./styles.css": "./dist/styles.css"
+    "./css": "./dist/tokens.css"
   },
   "scripts": {
-    "build": "tsup src/index.ts --format esm,cjs --dts --clean && cp src/styles.css dist/",
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean && cp src/tokens.css dist/",
     "dev": "tsup src/index.ts --format esm,cjs --watch",
     "lint": "eslint ."
   },
-  "peerDependencies": {
-    "react": ">=18"
-  },
   "devDependencies": {
-    "react": "catalog:react19",
-    "@types/react": "catalog:",
     "tsup": "catalog:",
     "typescript": "catalog:",
     "eslint": "^9.0.0",
     "@vendys/eslint-config": "workspace:*",
     "@vendys/typescript-config": "workspace:*"
-  },
-  "dependencies": {
-    "@vendys/tokens": "workspace:*"
   }
 }

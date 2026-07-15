@@ -1,0 +1,27 @@
+@import '@vendys/tokens/css';
+@import '@vendys/ui/styles.css';
+
+:root {
+  --ifm-color-primary: #43a047;
+  --ifm-color-primary-dark: #388e3c;
+  --ifm-color-primary-darker: #2e7d32;
+  --ifm-color-primary-darkest: #1b5e20;
+  --ifm-color-primary-light: #66bb6a;
+  --ifm-color-primary-lighter: #81c784;
+  --ifm-color-primary-lightest: #a5d6a7;
+  --ifm-font-family-base: var(--vd-font);
+}
+
+/* 데모 박스 */
+.demo {
+  border: 1px solid var(--vd-border-subtle);
+  border-radius: var(--vd-radius-md);
+  padding: 20px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  background: #fff;
+}
+.demo--col { flex-direction: column; align-items: stretch; }

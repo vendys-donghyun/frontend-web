@@ -1,0 +1,58 @@
+---
+id: colors
+title: 색상
+sidebar_position: 1
+---
+
+import { Swatch } from '@site/src/components/Demos';
+
+# 색상
+
+Primary는 `#43A047` 하나입니다. Material Green 램프에서 파생한 hover/active와
+Material Gray 램프를 함께 사용합니다.
+
+## Primary
+
+<div className="demo">
+  <Swatch color="#43a047" name="primary" hex="#43A047" />
+  <Swatch color="#388e3c" name="primary-hover" hex="#388E3C" />
+  <Swatch color="#2e7d32" name="primary-active" hex="#2E7D32" />
+  <Swatch color="#e8f5e9" name="primary-tint" hex="#E8F5E9" />
+  <Swatch color="#c8e6c9" name="primary-tint-hover" hex="#C8E6C9" />
+</div>
+
+```css
+color: var(--vd-primary);            /* #43A047 */
+background: var(--vd-primary-tint);  /* #E8F5E9 - weak 버튼, 배지 배경 */
+```
+
+성공(success) 상태는 별도 색을 만들지 않고 primary를 재사용합니다.
+
+## Gray
+
+Material Gray 램프를 그대로 씁니다.
+
+<div className="demo">
+  <Swatch color="#fafafa" name="gray-50" hex="#FAFAFA" />
+  <Swatch color="#f5f5f5" name="gray-100" hex="#F5F5F5" />
+  <Swatch color="#eeeeee" name="gray-200" hex="#EEEEEE" />
+  <Swatch color="#e0e0e0" name="gray-300" hex="#E0E0E0" />
+  <Swatch color="#bdbdbd" name="gray-400" hex="#BDBDBD" />
+  <Swatch color="#9e9e9e" name="gray-500" hex="#9E9E9E" />
+  <Swatch color="#757575" name="gray-600" hex="#757575" />
+  <Swatch color="#616161" name="gray-700" hex="#616161" />
+  <Swatch color="#424242" name="gray-800" hex="#424242" />
+  <Swatch color="#212121" name="gray-900" hex="#212121" />
+</div>
+
+## 시맨틱
+
+<div className="demo">
+  <Swatch color="#d32f2f" name="error" hex="#D32F2F" />
+  <Swatch color="#fdecea" name="error-tint" hex="#FDECEA" />
+  <Swatch color="#f57c00" name="warning" hex="#F57C00" />
+  <Swatch color="#fff3e0" name="warning-tint" hex="#FFF3E0" />
+  <Swatch color="#1976d2" name="info" hex="#1976D2" />
+</div>
+
+- 경고 배경 위 텍스트는 대비 확보를 위해 `--vd-warning-text`(#B45309)를 씁니다.

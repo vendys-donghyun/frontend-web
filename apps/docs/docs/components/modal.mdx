@@ -1,0 +1,48 @@
+---
+id: modal
+title: Modal
+sidebar_position: 8
+---
+
+import { ModalDemo } from '@site/src/components/Demos';
+
+# Modal
+
+Desktop에서는 중앙 모달(max 480px, radius 12), Mobile(767px 이하)에서는
+바텀시트로 자동 전환됩니다. ESC 키와 배경 클릭으로 닫힙니다.
+
+<div className="demo">
+  <ModalDemo />
+</div>
+
+```tsx
+const [open, setOpen] = useState(false);
+
+<Modal
+  open={open}
+  onClose={() => setOpen(false)}
+  title="정산을 확정할까요?"
+  actions={
+    <>
+      <Button variant="secondary" onClick={() => setOpen(false)}>취소</Button>
+      <Button onClick={confirm}>확정</Button>
+    </>
+  }
+>
+  확정 후에는 되돌릴 수 없습니다.
+</Modal>
+```
+
+## Props
+
+| prop | 타입 | 설명 |
+|---|---|---|
+| `open` | `boolean` | 표시 여부 |
+| `onClose` | `() => void` | 닫기 요청(배경 클릭, ESC). 확정 동작은 actions 버튼으로 |
+| `title` | `string` | 제목. 질문형 권장: "정산을 확정할까요?" |
+| `actions` | `ReactNode` | 하단 버튼. Desktop 우측 정렬(취소 왼쪽), Mobile 풀폭 세로 전환 |
+
+## 규칙
+
+- 제목은 행동을 묻는 질문형으로 씁니다: "정산을 확정할까요?"
+- 주요 동작 버튼이 오른쪽(Mobile에서는 위)입니다.

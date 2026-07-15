@@ -1,0 +1,61 @@
+---
+id: spacing
+title: 간격 · 모양
+sidebar_position: 3
+---
+
+# 간격 · 모양
+
+## 간격 (4px 그리드)
+
+임의 px 값 대신 토큰을 씁니다.
+
+| 토큰 | 값 | 용도 예 |
+|---|---|---|
+| `--vd-space-1` | 4px | 아이콘-텍스트 사이 |
+| `--vd-space-2` | 8px | 밀접한 요소 사이 |
+| `--vd-space-3` | 12px | 폼 필드 내부 |
+| `--vd-space-4` | 16px | 필드 사이, 모바일 카드 패딩 |
+| `--vd-space-5` | 20px | 데스크톱 카드 패딩 |
+| `--vd-space-6` | 24px | 섹션 내 블록 사이 |
+| `--vd-space-8` | 32px | 섹션 사이 |
+| `--vd-space-12` | 48px | 페이지 상하 여백 |
+| `--vd-space-16` | 64px | 큰 섹션 구분 |
+
+## 모서리 (radius)
+
+기본 8px, 컨트롤 크기에 비례해 조정합니다.
+
+| 토큰 | 값 | 용도 |
+|---|---|---|
+| `--vd-radius-sm` | 4px | 배지, 체크박스 |
+| `--vd-radius-md` | 8px | 버튼(32·40), 인풋, 카드 기본 |
+| `--vd-radius-lg` | 12px | 큰 버튼(48), 모달 |
+| `--vd-radius-xl` | 16px | 바텀시트 상단 |
+| `--vd-radius-full` | 9999px | 필형 요소 |
+
+## 그림자
+
+| 토큰 | 용도 |
+|---|---|
+| `--vd-shadow-subtle` | 떠 있는 카드 |
+| `--vd-shadow-standard` | 드롭다운, 팝오버 |
+| `--vd-shadow-prominent` | 모달 |
+
+## 컨트롤 높이
+
+| 토큰 | 값 |
+|---|---|
+| sm | 32px |
+| md | 40px (기본) |
+| lg | 48px |
+
+모바일 터치 대상 최소 44px를 지킵니다.
+
+## 반응형 기준점
+
+기준점은 하나입니다. 767px 이하 Mobile, 768px 이상 Desktop.
+
+```css
+@media (max-width: 767px) { /* Mobile */ }
+```
