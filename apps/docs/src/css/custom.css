@@ -32,7 +32,7 @@
 /* 네비바 로고 축소 (기본 2rem의 70%) */
 .navbar__logo { height: 1.4rem; }
 
-/* 문서 표를 vd-table과 같은 문법으로 - 셀 테두리·줄무늬 대신 헤더 배경 + 가로 구분선 */
+/* 문서 표를 DataGrid와 같은 문법으로 - 셀 테두리·줄무늬 대신 헤더 배경 + 가로 구분선 */
 .markdown table:not([class]) {
   font-size: 13.5px;
 }

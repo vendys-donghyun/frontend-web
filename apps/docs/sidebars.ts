@@ -20,7 +20,6 @@ const sidebars: SidebarsConfig = {
         'components/badge',
         'components/tabs',
         'components/card',
-        'components/table',
         'components/modal',
         'components/toast',
         'components/icon',
