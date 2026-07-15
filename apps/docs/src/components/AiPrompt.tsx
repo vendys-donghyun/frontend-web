@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from '@vendys/ui';
+import { Icon } from '@vendys/ui';
 // @ts-expect-error raw-loader 인라인 로더 - packages/tokens/DESIGN.md 원본을 빌드 시 문자열로 가져온다 (사본 없음)
 import designMd from '!!raw-loader!../../../../packages/tokens/DESIGN.md';
 
@@ -32,7 +32,16 @@ export function AiPrompt() {
           packages/tokens/DESIGN.md · {content.split('\n').length.toLocaleString()}줄 ·{' '}
           {content.length.toLocaleString()}자
         </span>
-        <Button onClick={copyAll}>{copied ? '복사되었습니다' : '전체 복사'}</Button>
+        <button
+          type="button"
+          className={['ai-prompt__copy', copied && 'ai-prompt__copy--done'].filter(Boolean).join(' ')}
+          aria-label="전체 복사"
+          title="전체 복사"
+          onClick={copyAll}
+        >
+          <Icon name={copied ? 'check' : 'copy'} size={16} />
+          {copied && <span>복사됨</span>}
+        </button>
       </div>
       <pre className="ai-prompt__pre">{content}</pre>
     </div>

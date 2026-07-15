@@ -91,3 +91,26 @@
   white-space: pre-wrap;
   word-break: break-all;
 }
+
+/* AI 프롬프트 - 아이콘 복사 버튼 */
+.ai-prompt__copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 8px;
+  font-size: 12.5px;
+  font-family: var(--vd-font);
+  color: var(--vd-text-sub);
+  background: transparent;
+  border: 1px solid var(--vd-border);
+  border-radius: var(--vd-radius-md);
+  cursor: pointer;
+  transition: background var(--vd-motion-fast) var(--vd-ease-out);
+}
+.ai-prompt__copy:hover { background: var(--vd-surface); color: var(--vd-text); }
+.ai-prompt__copy--done { color: var(--vd-primary); border-color: var(--vd-primary); }
+.ai-prompt__copy--done:hover { background: transparent; color: var(--vd-primary); }
+
+[data-theme='dark'] .ai-prompt__copy { border-color: var(--ifm-color-emphasis-300); color: var(--ifm-color-emphasis-600); }
+[data-theme='dark'] .ai-prompt__copy:hover { background: var(--ifm-color-emphasis-100); color: var(--ifm-color-emphasis-800); }

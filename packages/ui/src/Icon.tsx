@@ -41,6 +41,12 @@ const ICON_SHAPES: Record<string, ReactNode> = {
     </>
   ),
   more: <path d="M12 5h.01M12 12h.01M12 19h.01" />,
+  copy: (
+    <>
+      <rect x="8" y="8" width="13" height="13" rx="2" />
+      <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+    </>
+  ),
   download: <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />,
   external: (
     <>
