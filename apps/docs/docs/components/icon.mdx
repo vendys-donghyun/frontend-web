@@ -1,0 +1,31 @@
+---
+id: icon
+title: Icon
+sidebar_position: 10
+---
+
+import { IconGallery } from '@site/src/components/Demos';
+
+# Icon
+
+24x24 뷰박스의 스트로크 아이콘입니다. 색은 `currentColor`를 따라가서
+감싸는 요소의 글자색으로 제어합니다.
+
+<div className="demo">
+  <IconGallery />
+</div>
+
+```tsx
+<Icon name="check" />
+<Icon name="search" size={16} />
+<span style={{ color: 'var(--vd-error)' }}><Icon name="warning" /></span>
+```
+
+## Props
+
+| prop | 타입 | 기본값 | 설명 |
+|---|---|---|---|
+| `name` | `IconName` | - | 위 갤러리의 이름 |
+| `size` | `number` | `20` | px. 16 / 20 / 24 권장 |
+
+새 아이콘이 필요하면 임의의 SVG를 쓰지 말고 `Icon.tsx`의 세트에 같은 규격(24x24, stroke 2)으로 추가합니다.

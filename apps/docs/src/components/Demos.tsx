@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Modal, Tabs, Toast } from '@vendys/ui';
+import { Button, Icon, ICON_NAMES, Modal, Pagination, Tabs, Toast } from '@vendys/ui';
 import { typography } from '@vendys/tokens';
 
 export function TabsDemo() {
@@ -303,4 +303,35 @@ export function MotionDemo() {
       </div>
     </div>
   );
+}
+
+/** 아이콘 전체 견본 - ICON_NAMES를 그대로 렌더링 */
+export function IconGallery() {
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, width: '100%' }}>
+      {ICON_NAMES.map((name) => (
+        <div
+          key={name}
+          style={{
+            width: 104,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 6,
+            padding: '12px 4px',
+            border: '1px solid var(--vd-border-subtle)',
+            borderRadius: 8,
+          }}
+        >
+          <Icon name={name} />
+          <span style={{ fontSize: 11, fontFamily: 'monospace', color: 'var(--vd-text-sub)' }}>{name}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function PaginationDemo() {
+  const [page, setPage] = useState(5);
+  return <Pagination page={page} totalPages={12} onChange={setPage} />;
 }

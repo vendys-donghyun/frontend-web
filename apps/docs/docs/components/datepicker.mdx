@@ -1,0 +1,28 @@
+---
+id: datepicker
+title: DatePicker
+sidebar_position: 17
+---
+
+import { DatePicker } from '@vendys/ui';
+
+# DatePicker
+
+네이티브 `input[type=date]` 기반의 기본형입니다. 브라우저 달력 UI를 그대로 쓰고,
+라벨·도움말·오류는 Input과 같은 필드 문법을 따릅니다.
+
+<div className="demo demo--col" style={{ maxWidth: 360 }}>
+  <DatePicker label="정산 시작일" defaultValue="2026-07-01" />
+  <DatePicker label="정산 종료일" help="시작일 이후 날짜를 선택해 주세요" />
+</div>
+
+```tsx
+<DatePicker label="정산 시작일" value={start} onChange={(e) => setStart(e.target.value)} />
+```
+
+## Props
+
+Input과 동일합니다 (`label`, `help`, `error` + `input` 기본 속성). `type`만 date로 고정됩니다.
+
+커스텀 달력(범위 선택, 휴일 표시 등)이 필요해지면 이 API를 유지한 채 내부 구현만 교체합니다.
+현재 레포마다 달력 라이브러리가 3종으로 갈라져 있는 지점이라, 신규 코드는 이 컴포넌트를 씁니다.

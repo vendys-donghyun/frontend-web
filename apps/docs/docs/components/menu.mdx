@@ -1,0 +1,44 @@
+---
+id: menu
+title: Menu (드롭다운)
+sidebar_position: 14
+---
+
+import { Menu, Button, Icon } from '@vendys/ui';
+
+# Menu
+
+트리거를 누르면 열리는 드롭다운 메뉴입니다.
+바깥 클릭·ESC로 닫히고, 항목을 선택하면 자동으로 닫힙니다.
+
+<div className="demo" style={{ paddingBottom: 140 }}>
+  <Menu
+    trigger={<Button variant="secondary">더 보기</Button>}
+    items={[
+      { label: '수정' },
+      { label: '복제' },
+      { label: '삭제', danger: true },
+    ]}
+  />
+</div>
+
+```tsx
+<Menu
+  trigger={<Button variant="secondary">더 보기</Button>}
+  items={[
+    { label: '수정', onSelect: edit },
+    { label: '복제', onSelect: duplicate },
+    { label: '삭제', onSelect: remove, danger: true },
+  ]}
+/>
+```
+
+## Props
+
+| prop | 타입 | 기본값 | 설명 |
+|---|---|---|---|
+| `trigger` | `ReactNode` | - | 메뉴를 여는 요소 |
+| `items` | `{ label, onSelect?, danger?, disabled? }[]` | - | 메뉴 항목 |
+| `align` | `'start' \| 'end'` | `'start'` | 목록 정렬 기준 |
+
+파괴적 동작(삭제)은 `danger`로 표시하고 맨 아래에 둡니다.

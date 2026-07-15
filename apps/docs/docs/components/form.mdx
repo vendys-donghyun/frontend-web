@@ -1,0 +1,46 @@
+---
+id: form
+title: Form
+sidebar_position: 19
+---
+
+import { Form, FormActions, Input, Select, Checkbox, Button } from '@vendys/ui';
+
+# Form
+
+필드를 16px 간격의 세로 스택으로 배치하는 폼 레이아웃입니다.
+기본 제출(페이지 새로고침)은 자동으로 막습니다.
+
+<div className="demo demo--col" style={{ maxWidth: 400 }}>
+  <Form>
+    <Input label="회사명" placeholder="현대벤디스" />
+    <Select label="정산 주기" defaultValue="month">
+      <option value="week">매주</option>
+      <option value="month">매월</option>
+    </Select>
+    <Checkbox>이용약관에 동의합니다</Checkbox>
+    <FormActions>
+      <Button variant="secondary">취소</Button>
+      <Button>저장</Button>
+    </FormActions>
+  </Form>
+</div>
+
+```tsx
+<Form onSubmit={save}>
+  <Input label="회사명" />
+  <FormActions>
+    <Button variant="secondary" onClick={cancel}>취소</Button>
+    <Button type="submit">저장</Button>
+  </FormActions>
+</Form>
+```
+
+## 구성
+
+| 컴포넌트 | 역할 |
+|---|---|
+| `Form` | 세로 스택 레이아웃 + 기본 제출 방지 (`form` 기본 속성 전달) |
+| `FormActions` | 하단 버튼 영역 - 우측 정렬, 모바일에서 풀폭 세로 전환 |
+
+상태 관리(값·검증)는 강제하지 않습니다. 각 필드의 `error` prop에 검증 결과를 넘기는 방식으로 씁니다.

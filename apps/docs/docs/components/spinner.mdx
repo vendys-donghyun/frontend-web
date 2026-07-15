@@ -1,0 +1,30 @@
+---
+id: spinner
+title: Spinner
+sidebar_position: 11
+---
+
+import { Spinner } from '@vendys/ui';
+
+# Spinner
+
+영역 단위 로딩 표시입니다. 버튼 내부 로딩은 Spinner를 직접 넣지 말고
+Button의 `loading` prop을 씁니다.
+
+<div className="demo">
+  <Spinner size="sm" />
+  <Spinner />
+  <Spinner size="lg" />
+</div>
+
+```tsx
+{isLoading ? <Spinner /> : <목록 />}
+```
+
+## Props
+
+| prop | 타입 | 기본값 | 설명 |
+|---|---|---|---|
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | 16 / 24 / 32px |
+
+`role="status"`가 적용되어 스크린리더에 로딩 중임이 전달됩니다.

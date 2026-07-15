@@ -1,8 +1,18 @@
 export { Button, type ButtonProps, type ButtonVariant, type ButtonSize } from './Button';
 export { Input, Select, type InputProps, type SelectProps } from './Input';
 export { Checkbox, Radio } from './Selection';
+export { Switch, type SwitchProps } from './Switch';
 export { Badge, type BadgeProps, type BadgeTone } from './Badge';
 export { Tabs, type TabsProps, type TabItem } from './Tabs';
 export { Card, type CardProps } from './Card';
 export { Modal, type ModalProps } from './Modal';
 export { Toast, type ToastProps } from './Toast';
+export { Icon, ICON_NAMES, type IconProps, type IconName } from './Icon';
+export { Spinner, type SpinnerProps } from './Spinner';
+export { Tooltip, type TooltipProps } from './Tooltip';
+export { Menu, type MenuProps, type MenuItem } from './Menu';
+export { Pagination, type PaginationProps } from './Pagination';
+export { Accordion, type AccordionProps, type AccordionItem } from './Accordion';
+export { DatePicker, type DatePickerProps } from './DatePicker';
+export { FileUpload, type FileUploadProps } from './Upload';
+export { Form, FormActions, type FormProps } from './Form';

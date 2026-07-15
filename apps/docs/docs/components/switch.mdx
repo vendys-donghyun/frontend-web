@@ -1,0 +1,29 @@
+---
+id: switch
+title: Switch
+sidebar_position: 12
+---
+
+import { Switch } from '@vendys/ui';
+
+# Switch
+
+켜고 끄는 즉시 적용되는 설정에 씁니다. 저장 버튼을 눌러야 반영되는 선택은
+Checkbox를 씁니다.
+
+<div className="demo demo--col" style={{ gap: 8 }}>
+  <Switch defaultChecked>알림 받기</Switch>
+  <Switch>자동 정산</Switch>
+  <Switch disabled>비활성 설정</Switch>
+</div>
+
+```tsx
+<Switch checked={enabled} onChange={(e) => setEnabled(e.target.checked)}>
+  알림 받기
+</Switch>
+```
+
+## Props
+
+`input` 기본 속성(`checked`, `onChange`, `disabled` 등)을 그대로 받고 `children`이 라벨입니다.
+`role="switch"`가 적용됩니다.
