@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Icon, ICON_NAMES, Modal, Pagination, Tabs, Toast } from '@vendys/ui';
+import { Badge, Button, DataGrid, Icon, ICON_NAMES, Modal, Pagination, Tabs, Toast, type DataGridColumn } from '@vendys/ui';
 import { typography } from '@vendys/tokens';
 
 export function TabsDemo() {
@@ -334,4 +334,97 @@ export function IconGallery() {
 export function PaginationDemo() {
   const [page, setPage] = useState(5);
   return <Pagination page={page} totalPages={12} onChange={setPage} />;
+}
+
+type SettlementRow = {
+  id: number;
+  store: string;
+  status: string;
+  settledAt: string;
+  count: number;
+  amount: number;
+};
+
+const GRID_ROWS: SettlementRow[] = [
+  { id: 1, store: '본죽 역삼점', status: '정산 완료', settledAt: '2026-07-10', count: 128, amount: 1216000 },
+  { id: 2, store: '맘스터치 선릉점', status: '정산 대기', settledAt: '2026-07-12', count: 96, amount: 1075200 },
+  { id: 3, store: '서브웨이 삼성점', status: '정산 완료', settledAt: '2026-07-09', count: 210, amount: 1869000 },
+  { id: 4, store: '한솥도시락 대치점', status: '확인 필요', settledAt: '2026-07-11', count: 54, amount: 486000 },
+  { id: 5, store: '김밥천국 역삼2호점', status: '정산 완료', settledAt: '2026-07-08', count: 302, amount: 2114000 },
+  { id: 6, store: '샐러디 테헤란점', status: '실패', settledAt: '2026-07-12', count: 12, amount: 118800 },
+];
+
+const GRID_STATUS_TONE: Record<string, 'success' | 'neutral' | 'warning' | 'error'> = {
+  '정산 완료': 'success',
+  '정산 대기': 'neutral',
+  '확인 필요': 'warning',
+  실패: 'error',
+};
+
+/** DataGrid 데모 - 선택/정렬/로딩/페이지네이션 조합 */
+export function DataGridDemo() {
+  const [selected, setSelected] = useState<(string | number)[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+
+  const columns: DataGridColumn<SettlementRow>[] = [
+    { field: 'store', headerName: '가맹점' },
+    {
+      field: 'status',
+      headerName: '상태',
+      width: 110,
+      align: 'center',
+      render: (value) => <Badge tone={GRID_STATUS_TONE[String(value)] ?? 'neutral'}>{String(value)}</Badge>,
+    },
+    { field: 'settledAt', headerName: '정산일', type: 'date', width: 120 },
+    { field: 'count', headerName: '건수', type: 'number', width: 90 },
+    { field: 'amount', headerName: '금액(원)', type: 'number', width: 130 },
+  ];
+
+  return (
+    <div style={{ width: '100%' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+        <span style={{ fontSize: 13, color: 'var(--vd-text-sub)' }}>
+          전체 {GRID_ROWS.length}건 · 선택 {selected.length}건
+        </span>
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => {
+            setLoading(true);
+            setTimeout(() => setLoading(false), 1200);
+          }}
+        >
+          로딩 재현
+        </Button>
+      </div>
+      <DataGrid
+        columns={columns}
+        rows={GRID_ROWS}
+        rowKey={(row) => row.id}
+        selectable="multi"
+        selectedKeys={selected}
+        onSelectionChange={(keys) => setSelected(keys)}
+        loading={loading}
+      />
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: 12 }}>
+        <Pagination page={page} totalPages={5} onChange={setPage} />
+      </div>
+    </div>
+  );
+}
+
+/** compact 밀도 + 빈 상태 데모 */
+export function DataGridEmptyDemo() {
+  return (
+    <DataGrid
+      density="compact"
+      columns={[
+        { field: 'store', headerName: '가맹점' },
+        { field: 'amount', headerName: '금액(원)', type: 'number', width: 130 },
+      ]}
+      rows={[]}
+      rowKey={(row: { id: number }) => row.id}
+    />
+  );
 }

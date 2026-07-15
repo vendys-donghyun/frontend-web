@@ -1,0 +1,79 @@
+---
+id: datagrid
+title: DataGrid
+sidebar_position: 20
+---
+
+import { DataGridDemo, DataGridEmptyDemo } from '@site/src/components/Demos';
+
+# DataGrid
+
+조회형 데이터 그리드입니다. vone-web의 ag-Grid(ClientSideTable) 사용 패턴 중
+가장 빈도가 높은 것들 - 셀 포맷(빈값 '-', 숫자 콤마, 날짜), 상태 배지, 정렬,
+행 선택, 로딩/빈 상태 - 을 디자인 토큰 기반으로 다시 구현했습니다.
+
+<div className="demo demo--col">
+  <DataGridDemo />
+</div>
+
+```tsx
+const columns: DataGridColumn<SettlementRow>[] = [
+  { field: 'store', headerName: '가맹점' },
+  {
+    field: 'status', headerName: '상태', width: 110, align: 'center',
+    render: (value) => <Badge tone={STATUS_TONE[value]}>{value}</Badge>,
+  },
+  { field: 'settledAt', headerName: '정산일', type: 'date', width: 120 },
+  { field: 'amount', headerName: '금액(원)', type: 'number', width: 130 },
+];
+
+<DataGrid
+  columns={columns}
+  rows={rows}
+  rowKey={(row) => row.id}
+  selectable="multi"
+  onSelectionChange={(keys, rows) => setSelected(keys)}
+  loading={isFetching}
+/>
+```
+
+## 빈 상태 · compact 밀도
+
+행 36px의 compact 밀도는 어드민 화면용입니다 (vone-web 34px 참고).
+
+<div className="demo demo--col">
+  <DataGridEmptyDemo />
+</div>
+
+## 컬럼 정의 (DataGridColumn)
+
+| 속성 | 타입 | 설명 |
+|---|---|---|
+| `field` | `string` | 행 객체의 키 |
+| `headerName` | `string` | 헤더 문구 |
+| `width` | `number` | px 고정폭. 없으면 남은 폭 균등 분배 |
+| `type` | `'text' \| 'number' \| 'date' \| 'datetime'` | number는 콤마+우측정렬, date는 YYYY-MM-DD. 빈값은 '-' |
+| `align` | `'left' \| 'center' \| 'right'` | 기본 left (number는 right) |
+| `sortable` | `boolean` | 기본 true. 헤더 클릭 → 오름/내림/해제 순환 |
+| `render` | `(value, row) => ReactNode` | 커스텀 셀 (배지, 링크, 버튼) |
+| `valueGetter` | `(row) => unknown` | 표시·정렬 값 계산 |
+
+## Props
+
+| prop | 타입 | 설명 |
+|---|---|---|
+| `columns` / `rows` / `rowKey` | - | 필수 |
+| `selectable` | `'single' \| 'multi'` | 체크박스 열 추가. multi는 헤더 전체 선택 |
+| `selectedKeys` / `onSelectionChange` | - | 선택 제어 (미지정 시 내부 상태) |
+| `onRowClick` | `(row) => void` | 행 클릭 |
+| `onSortChange` | `(sort) => void` | 정렬 변경 알림 (서버 정렬 연동용) |
+| `loading` | `boolean` | 스피너 오버레이 |
+| `emptyMessage` | `string` | 기본 "조회된 데이터가 없습니다" |
+| `density` | `'standard' \| 'compact'` | 행 48 / 36 |
+| `height` | `number \| string` | 지정 시 헤더 고정 세로 스크롤 |
+
+## 범위
+
+이 컴포넌트는 **조회형 클라이언트 그리드**(vone-web 사용량의 대다수)를 대상으로 합니다.
+인라인 셀 편집, 셋 필터(체크박스 목록 필터), 서버사이드 로우 모델, 셀 범위 선택·엑셀 붙여넣기가
+필요한 화면은 ag-Grid를 유지하는 하이브리드 전략을 권장합니다.

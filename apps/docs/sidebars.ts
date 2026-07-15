@@ -33,6 +33,7 @@ const sidebars: SidebarsConfig = {
         'components/datepicker',
         'components/upload',
         'components/form',
+        'components/datagrid',
       ],
     },
   ],
