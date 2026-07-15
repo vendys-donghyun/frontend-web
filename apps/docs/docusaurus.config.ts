@@ -3,7 +3,7 @@ import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: '현대벤디스 디자인 시스템',
+  title: '현대벤디스',
   tagline: '디자인 토큰과 공용 UI 컴포넌트',
   favicon: 'img/favicon.ico',
   url: 'https://design.vendys.co.kr',
@@ -26,13 +26,13 @@ const config: Config = {
   ],
   themeConfig: {
     navbar: {
-      title: '현대벤디스 디자인 시스템',
+      title: '현대벤디스',
       logo: { alt: '현대벤디스', src: 'img/simbol.svg' },
       items: [{ href: 'https://github.com/vendys', label: 'GitHub', position: 'right' }],
     },
     footer: {
       style: 'light',
-      copyright: `© ${new Date().getFullYear()} 현대벤디스 제품개발실 프론트엔드팀`,
+      copyright: `© ${new Date().getFullYear()} 현대벤디스`,
     },
     prism: { theme: prismThemes.github, darkTheme: prismThemes.dracula },
   } satisfies Preset.ThemeConfig,

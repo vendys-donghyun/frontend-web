@@ -25,3 +25,6 @@
   background: #fff;
 }
 .demo--col { flex-direction: column; align-items: stretch; }
+
+/* 네비바 로고 축소 (기본 2rem의 70%) */
+.navbar__logo { height: 1.4rem; }
