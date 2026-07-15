@@ -10,6 +10,7 @@
   --vd-primary-active: #2e7d32;
   --vd-primary-tint: #e8f5e9;
   --vd-primary-tint-hover: #c8e6c9;
+  --vd-primary-tint-active: #a5d6a7; /* tint 3단계 (Material Green 200) - 선택 겹침, tint 요소 pressed */
   --vd-on-primary: #ffffff;
 
   /* ---- 그레이 (Material Gray) ---- */

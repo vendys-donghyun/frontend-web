@@ -773,3 +773,11 @@ th.vd-grid__cell--pinned {
 .vd-grid__table tbody tr:hover .vd-grid__td--in-range {
   background: var(--vd-primary-tint-hover);
 }
+
+/* 체크 선택 행과 범위 선택이 겹친 셀 - 한 단계 더 진하게 (hover 시 또 한 단계) */
+.vd-grid__table tbody tr.vd-grid__row--selected .vd-grid__td--in-range {
+  background: var(--vd-primary-tint-hover);
+}
+.vd-grid__table tbody tr.vd-grid__row--selected:hover .vd-grid__td--in-range {
+  background: var(--vd-primary-tint-active);
+}

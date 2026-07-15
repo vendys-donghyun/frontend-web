@@ -10,6 +10,8 @@ export const colors = {
   primaryActive: '#2E7D32',
   primaryTint: '#E8F5E9',
   primaryTintHover: '#C8E6C9',
+  /** tint 3단계 (Material Green 200) - 선택 겹침, tint 요소 pressed */
+  primaryTintActive: '#A5D6A7',
   onPrimary: '#FFFFFF',
   gray50: '#FAFAFA',
   gray100: '#F5F5F5',
