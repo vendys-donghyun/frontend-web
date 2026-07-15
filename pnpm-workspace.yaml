@@ -1,0 +1,22 @@
+# 어떤 폴더가 독립 패키지인지 선언
+packages:
+  - 'apps/*'
+  - 'packages/*'
+
+# 전 앱 공통 도구 버전 (catalog:  로 참조)
+catalog:
+  vite: ^8.1.0
+  '@vitejs/plugin-react': ^6.0.0
+  tsup: ^8.5.0
+  typescript: ^5.7.0
+  '@types/react': ^19.0.0
+  '@types/react-dom': ^19.0.0
+
+# React 버전을 앱별로 공존시키는 이름표 (catalog:react18 / catalog:react19)
+catalogs:
+  react18:
+    react: ^18.3.1
+    react-dom: ^18.3.1
+  react19:
+    react: ^19.2.0
+    react-dom: ^19.2.0

@@ -1,0 +1,33 @@
+{
+  "name": "@vendys/ui",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean",
+    "dev": "tsup src/index.ts --format esm,cjs --watch",
+    "lint": "eslint ."
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "devDependencies": {
+    "react": "catalog:react19",
+    "@types/react": "catalog:",
+    "tsup": "catalog:",
+    "typescript": "catalog:",
+    "eslint": "^9.0.0",
+    "@vendys/eslint-config": "workspace:*",
+    "@vendys/typescript-config": "workspace:*"
+  }
+}
