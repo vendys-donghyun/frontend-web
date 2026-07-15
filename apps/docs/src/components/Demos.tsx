@@ -476,3 +476,40 @@ export function DataGridPinnedDemo() {
     <DataGrid columns={columns} rows={GRID_ROWS} rowKey={(row) => row.id} selectable="multi" minWidth={1240} />
   );
 }
+
+/** AI 프롬프트 페이지 좌측용 - 데스크톱 크기만 보여주는 컴팩트 타이포 견본 */
+export function TypeScaleMini() {
+  const roles = [
+    { key: 'display', label: 'Display' },
+    { key: 'title', label: 'Title' },
+    { key: 'section', label: 'Section' },
+    { key: 'body', label: 'Body' },
+    { key: 'caption', label: 'Caption' },
+  ] as const;
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 14, width: '100%' }}>
+      {roles.map(({ key, label }) => {
+        const t = typography.scale[key];
+        return (
+          <div key={key}>
+            <div style={{ fontSize: 11.5, color: 'var(--vd-text-sub)', marginBottom: 2 }}>
+              {label} · {t.desktop}px · {t.weight}
+            </div>
+            <div
+              style={{
+                fontFamily: typography.fontFamily,
+                fontSize: t.desktop,
+                fontWeight: t.weight,
+                lineHeight: 1.3,
+                letterSpacing: typography.letterSpacing,
+                color: 'var(--vd-text)',
+              }}
+            >
+              맛있는 식사, 간편한 정산
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}

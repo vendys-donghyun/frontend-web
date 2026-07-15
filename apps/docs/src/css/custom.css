@@ -126,7 +126,7 @@
   min-width: 0;
 }
 .ai-prompt-layout__panel {
-  flex: 1.25;
+  flex: 0 0 400px;
   min-width: 0;
   position: sticky;
   top: calc(var(--ifm-navbar-height) + 16px);

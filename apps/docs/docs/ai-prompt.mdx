@@ -5,6 +5,7 @@ sidebar_position: 2
 hide_table_of_contents: true
 ---
 
+import { Swatch, TypeScaleMini, SpacingScale, RadiusScale } from '@site/src/components/Demos';
 import { AiPrompt } from '@site/src/components/AiPrompt';
 
 # AI 프롬프트
@@ -12,29 +13,57 @@ import { AiPrompt } from '@site/src/components/AiPrompt';
 <div className="ai-prompt-layout">
 <div className="ai-prompt-layout__docs">
 
-이 디자인 시스템 전체를 **AI가 읽을 수 있는 한 개의 문서**(`DESIGN.md`)로 제공합니다.
-오른쪽 문서를 복사해서 프롬프트에 붙여넣으면, AI가 토큰과 규칙대로 UI를 만듭니다.
+오른쪽 문서(`DESIGN.md`)를 복사해 프롬프트에 붙여넣으면 AI가 아래 기준대로 UI를 만듭니다.
+레포 안에서는 복사 없이 `packages/tokens/DESIGN.md`를 컨텍스트로 지정합니다.
 
-### 사용법
+## Color Palette
 
-- **채팅형 AI** (Claude, ChatGPT 등): 오른쪽 문서를 복사해 붙여넣고 요청을 이어서 씁니다
-- **레포 안의 AI 도구** (Claude Code 등): 복사할 필요 없이 `packages/tokens/DESIGN.md`를 컨텍스트로 지정합니다
+<div className="demo">
+<Swatch color="#43a047" name="primary" hex="#43A047" />
+<Swatch color="#e8f5e9" name="primary-tint" hex="#E8F5E9" />
+<Swatch color="#212121" name="text" hex="#212121" />
+<Swatch color="#f5f5f5" name="surface" hex="#F5F5F5" />
+<Swatch color="#d32f2f" name="error" hex="#D32F2F" />
+<Swatch color="#f57c00" name="warning" hex="#F57C00" />
+</div>
 
-### 예시 프롬프트
+[전체 색상 보기 →](/tokens/colors)
 
-```text
-(DESIGN.md 붙여넣기)
+## Typography
 
-이 디자인 기준으로 가맹점 정산 내역 화면을 만들어줘.
-상단에 기간 필터, 아래에 정산 목록 표.
-```
+<div className="demo demo--col">
+<TypeScaleMini />
+</div>
 
-### 문서에 담긴 것
+[전체 스케일 보기 →](/tokens/typography)
 
-- **토큰 요약** - 색상, 타이포그래피, 간격, radius, 그림자, 모션
-- **규칙** - 색 역할 제한, 임의 값 금지, 과거 초록 값 사용 금지
-- **컴포넌트 20종 계약** - 크기·색·상태(hover/loading/disabled)까지
-- **Do / Don't, 반응형, 상태, 보이스 & 톤**
+## Spacing & Shape
+
+<div className="demo demo--col">
+<SpacingScale />
+</div>
+
+<div className="demo">
+<RadiusScale />
+</div>
+
+[간격 · 모양 자세히 →](/tokens/spacing)
+
+## Guidelines
+
+**Do**
+
+- 초록(#43A047)은 주요 버튼 · 활성 상태 · 포커스에만
+- 비동기 동작 버튼에는 loading 상태를 넣고 버튼 폭 유지
+- 간격은 4px 그리드, 모서리 기본 8px
+- 오류 문구는 원인과 해결책을 구체적으로
+
+**Don't**
+
+- 새로운 초록 값 생성 금지 (과거 #46B476, #0BB656 등)
+- 순수 검정(#000) 본문, 임의 회색 금지
+- 한 화면에 Primary 버튼 2개 이상 금지
+- 장식용 그림자 · 그라디언트, UI 이모지 금지
 
 </div>
 <div className="ai-prompt-layout__panel">
