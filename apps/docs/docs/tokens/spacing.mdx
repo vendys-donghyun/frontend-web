@@ -1,56 +1,55 @@
 ---
 id: spacing
-title: 간격 · 모양
+title: Spacing · Shape
 sidebar_position: 3
 ---
 
-# 간격 · 모양
+import { SpacingScale, RadiusScale, ShadowScale, ControlScale } from '@site/src/components/Demos';
+
+# Spacing · Shape
+
+간격, 모서리, 그림자, 컨트롤 높이의 기준입니다.
 
 ## 간격 (4px 그리드)
 
-임의 px 값 대신 토큰을 씁니다.
+모든 간격은 4px의 배수입니다. 아래 값 외의 간격(예: 10px, 18px)은 쓰지 않습니다.
+막대 길이가 실제 간격 크기입니다.
 
-| 토큰 | 값 | 용도 예 |
-|---|---|---|
-| `--vd-space-1` | 4px | 아이콘-텍스트 사이 |
-| `--vd-space-2` | 8px | 밀접한 요소 사이 |
-| `--vd-space-3` | 12px | 폼 필드 내부 |
-| `--vd-space-4` | 16px | 필드 사이, 모바일 카드 패딩 |
-| `--vd-space-5` | 20px | 데스크톱 카드 패딩 |
-| `--vd-space-6` | 24px | 섹션 내 블록 사이 |
-| `--vd-space-8` | 32px | 섹션 사이 |
-| `--vd-space-12` | 48px | 페이지 상하 여백 |
-| `--vd-space-16` | 64px | 큰 섹션 구분 |
+<div className="demo demo--col">
+  <SpacingScale />
+</div>
+
+```css
+padding: var(--vd-space-5);      /* 20px - 데스크톱 카드 패딩 */
+gap: var(--vd-space-2);          /* 8px */
+```
 
 ## 모서리 (radius)
 
-기본 8px, 컨트롤 크기에 비례해 조정합니다.
+기본은 8px이고, 요소가 클수록 모서리도 비례해서 커집니다.
 
-| 토큰 | 값 | 용도 |
-|---|---|---|
-| `--vd-radius-sm` | 4px | 배지, 체크박스 |
-| `--vd-radius-md` | 8px | 버튼(32·40), 인풋, 카드 기본 |
-| `--vd-radius-lg` | 12px | 큰 버튼(48), 모달 |
-| `--vd-radius-xl` | 16px | 바텀시트 상단 |
-| `--vd-radius-full` | 9999px | 필형 요소 |
+<div className="demo">
+  <RadiusScale />
+</div>
 
 ## 그림자
 
-| 토큰 | 용도 |
-|---|---|
-| `--vd-shadow-subtle` | 떠 있는 카드 |
-| `--vd-shadow-standard` | 드롭다운, 팝오버 |
-| `--vd-shadow-prominent` | 모달 |
+그림자는 3단계뿐입니다. 붙어 있는 요소(카드 기본형)는 그림자 없이 보더만 씁니다.
+
+<div className="demo">
+  <ShadowScale />
+</div>
 
 ## 컨트롤 높이
 
-| 토큰 | 값 |
-|---|---|
-| sm | 32px |
-| md | 40px (기본) |
-| lg | 48px |
+버튼·인풋 높이는 3단입니다. 기본은 md(40px)이고, 모바일 주요 동작은 lg(48px)를 씁니다.
 
-모바일 터치 대상 최소 44px를 지킵니다.
+<div className="demo">
+  <ControlScale />
+</div>
+
+- 모바일 터치 대상은 최소 44px을 지킵니다. lg(48px)는 자동으로 충족하고,
+  작은 요소는 여백을 포함해 44px을 확보합니다.
 
 ## 반응형 기준점
 
