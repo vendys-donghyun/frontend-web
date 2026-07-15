@@ -89,6 +89,7 @@ export function Swatch({ color, name, hex }: { color: string; name: string; hex:
 }
 
 const TYPE_ROLES = [
+  { key: 'displayLg', label: 'Display Large', usage: '홈페이지 등 마케팅 화면 전용' },
   { key: 'display', label: 'Display', usage: '화면 최상단의 가장 큰 제목' },
   { key: 'title', label: 'Title', usage: '페이지 제목' },
   { key: 'section', label: 'Section', usage: '섹션 제목' },

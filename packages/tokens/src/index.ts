@@ -67,6 +67,8 @@ export const typography = {
   letterSpacing: '-0.2px',
   /** Desktop / Mobile 이원 스케일 */
   scale: {
+    /** 홈페이지 등 마케팅 화면 전용 초대형 제목. 서비스 화면에서는 display까지만 쓴다 */
+    displayLg: { desktop: 52, mobile: 36, weight: 700 },
     display: { desktop: 32, mobile: 28, weight: 700 },
     title: { desktop: 24, mobile: 22, weight: 700 },
     section: { desktop: 20, mobile: 18, weight: 700 },

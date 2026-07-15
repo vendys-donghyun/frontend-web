@@ -91,7 +91,13 @@
 }
 
 /* ---------- 입력창 ---------- */
-.vd-field { display: flex; flex-direction: column; }
+.vd-field {
+  display: flex;
+  flex-direction: column;
+  /* flex 아이템으로 놓여도 내용(긴 선택 라벨 등)이 컨테이너를 밀고 나가지 않게 */
+  min-width: 0;
+  max-width: 100%;
+}
 .vd-field__label {
   font-family: var(--vd-font);
   font-size: 13px;
@@ -135,6 +141,7 @@
 /* ---------- 셀렉트 (커스텀 - 단일/다중/검색) ---------- */
 .vd-select-wrap { position: relative; }
 .vd-select-trigger {
+  max-width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
