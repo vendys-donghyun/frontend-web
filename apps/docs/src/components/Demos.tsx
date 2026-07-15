@@ -89,11 +89,11 @@ export function Swatch({ color, name, hex }: { color: string; name: string; hex:
 }
 
 const TYPE_ROLES = [
-  { key: 'display', label: 'Display', usage: '랜딩 히어로, 핵심 수치' },
+  { key: 'display', label: 'Display', usage: '화면 최상단의 가장 큰 제목' },
   { key: 'title', label: 'Title', usage: '페이지 제목' },
   { key: 'section', label: 'Section', usage: '섹션 제목' },
   { key: 'cardTitle', label: 'Card title', usage: '카드·모달 제목' },
-  { key: 'bodyLg', label: 'Body large', usage: '리드 문단, 강조 본문' },
+  { key: 'bodyLg', label: 'Body large', usage: '강조하고 싶은 본문' },
   { key: 'body', label: 'Body', usage: '기본 본문' },
   { key: 'caption', label: 'Caption', usage: '보조 설명, 라벨' },
 ] as const;
