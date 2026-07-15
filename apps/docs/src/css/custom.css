@@ -78,3 +78,16 @@
   pointer-events: none;
   margin-top: 6px;
 }
+
+/* AI 프롬프트 원문 미리보기 */
+.ai-prompt__pre {
+  max-height: 560px;
+  overflow: auto;
+  font-size: 12px;
+  line-height: 1.6;
+  padding: 16px 18px;
+  border: 1px solid var(--vd-border-subtle);
+  border-radius: var(--vd-radius-md);
+  white-space: pre-wrap;
+  word-break: break-all;
+}

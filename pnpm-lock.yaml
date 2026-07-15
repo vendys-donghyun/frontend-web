@@ -92,6 +92,9 @@ importers:
       '@types/react':
         specifier: ^19.0.0
         version: 19.2.17
+      raw-loader:
+        specifier: ^4.0.2
+        version: 4.0.2(webpack@5.108.4(@swc/core@1.15.43)(postcss@8.5.16))
       typescript:
         specifier: ~6.0.2
         version: 6.0.3
@@ -5591,6 +5594,12 @@ packages:
   raw-body@2.5.3:
     resolution: {integrity: sha512-s4VSOf6yN0rvbRZGxs8Om5CWj6seneMwK3oDb4lWDH0UPhWcxwOWw5+qk24bxq87szX1ydrwylIOp2uG1ojUpA==}
     engines: {node: '>= 0.8'}
+
+  raw-loader@4.0.2:
+    resolution: {integrity: sha512-ZnScIV3ag9A4wPX/ZayxL/jZH+euYb6FcUinPcgiQW0+UBtEv0O6Q3lGd3cqJ+GHH+rksEv3Pj99oxJ3u3VIKA==}
+    engines: {node: '>= 10.13.0'}
+    peerDependencies:
+      webpack: ^4.0.0 || ^5.0.0
 
   rc@1.2.8:
     resolution: {integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==}
@@ -13408,6 +13417,12 @@ snapshots:
       http-errors: 2.0.1
       iconv-lite: 0.4.24
       unpipe: 1.0.0
+
+  raw-loader@4.0.2(webpack@5.108.4(@swc/core@1.15.43)(postcss@8.5.16)):
+    dependencies:
+      loader-utils: 2.0.4
+      schema-utils: 3.3.0
+      webpack: 5.108.4(@swc/core@1.15.43)(postcss@8.5.16)
 
   rc@1.2.8:
     dependencies:
