@@ -98,6 +98,28 @@ const TYPE_ROLES = [
   { key: 'caption', label: 'Caption', usage: '보조 설명, 라벨' },
 ] as const;
 
+function TypeSample({ device, size, weight, lineHeight }: { device: string; size: number; weight: number; lineHeight: number }) {
+  return (
+    <div style={{ flex: 1, minWidth: 240 }}>
+      <div style={{ fontSize: 11.5, color: 'var(--vd-text-sub)', marginBottom: 4 }}>
+        {device} · {size}px
+      </div>
+      <div
+        style={{
+          fontFamily: typography.fontFamily,
+          fontSize: size,
+          fontWeight: weight,
+          lineHeight,
+          letterSpacing: typography.letterSpacing,
+          color: 'var(--vd-text)',
+        }}
+      >
+        맛있는 식사, 간편한 정산
+      </div>
+    </div>
+  );
+}
+
 /** 토큰(@vendys/tokens)의 값을 그대로 렌더링하는 타이포그래피 견본 - 문서와 실제 값이 어긋나지 않는다 */
 export function TypeScale() {
   return (
@@ -113,29 +135,17 @@ export function TypeScale() {
               gap: 24,
               padding: '16px 0',
               borderBottom: '1px solid var(--vd-border-subtle)',
-              alignItems: 'baseline',
+              alignItems: 'flex-start',
               flexWrap: 'wrap',
             }}
           >
-            <div style={{ width: 200, flexShrink: 0, fontSize: 12.5, color: 'var(--vd-text-sub)', lineHeight: 1.5 }}>
+            <div style={{ width: 150, flexShrink: 0, fontSize: 12.5, color: 'var(--vd-text-sub)', lineHeight: 1.5 }}>
               <div style={{ color: 'var(--vd-text)', fontSize: 13.5, fontWeight: 600 }}>{label}</div>
-              <div>
-                D {t.desktop}px · M {t.mobile}px · {t.weight}
-              </div>
+              <div>굵기 {t.weight}</div>
               <div>{usage}</div>
             </div>
-            <div
-              style={{
-                fontFamily: typography.fontFamily,
-                fontSize: t.desktop,
-                fontWeight: t.weight,
-                lineHeight,
-                letterSpacing: typography.letterSpacing,
-                color: 'var(--vd-text)',
-              }}
-            >
-              맛있는 식사, 간편한 정산
-            </div>
+            <TypeSample device="Desktop" size={t.desktop} weight={t.weight} lineHeight={lineHeight} />
+            <TypeSample device="Mobile" size={t.mobile} weight={t.weight} lineHeight={lineHeight} />
           </div>
         );
       })}
