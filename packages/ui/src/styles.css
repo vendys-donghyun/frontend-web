@@ -315,12 +315,14 @@
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  background: var(--vd-gray-900);
-  color: #fff;
+  /* 라이트 표면 - 제품 전체가 밝은 톤이라 반전(다크) 대신 보더+진한 그림자로 분리한다 */
+  background: var(--vd-bg);
+  color: var(--vd-text);
+  border: 1px solid var(--vd-border-subtle);
   font-size: 14px;
   border-radius: var(--vd-radius-md);
   padding: 12px 18px;
-  box-shadow: var(--vd-shadow-standard);
+  box-shadow: var(--vd-shadow-prominent);
   animation: vd-toast-in var(--vd-motion-fast) var(--vd-ease-out);
 }
 @keyframes vd-toast-in {
