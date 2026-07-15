@@ -593,7 +593,10 @@
 }
 .vd-grid__table tbody tr:hover .vd-grid__td { background: var(--vd-gray-50); }
 .vd-grid__row--selected .vd-grid__td { background: var(--vd-primary-tint); }
-.vd-grid__row--selected:hover .vd-grid__td { background: var(--vd-primary-tint); }
+/* 선택 행 hover - 회색(gray-50) 규칙보다 우선하도록 선택자를 강하게, 색은 tint 한 단계 진하게 */
+.vd-grid__table tbody tr.vd-grid__row--selected:hover .vd-grid__td {
+  background: var(--vd-primary-tint-hover);
+}
 .vd-grid__row--clickable { cursor: pointer; }
 .vd-grid__empty {
   padding: var(--vd-space-12) 0;
