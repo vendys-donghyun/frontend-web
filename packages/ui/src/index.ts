@@ -6,6 +6,7 @@ export { Badge, type BadgeProps, type BadgeTone } from './Badge';
 export { Tabs, type TabsProps, type TabItem } from './Tabs';
 export { Card, type CardProps } from './Card';
 export { Modal, type ModalProps } from './Modal';
+export { Drawer, type DrawerProps } from './Drawer';
 export { Toast, type ToastProps } from './Toast';
 export { Icon, ICON_NAMES, type IconProps, type IconName } from './Icon';
 export { Spinner, type SpinnerProps } from './Spinner';

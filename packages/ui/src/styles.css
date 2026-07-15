@@ -333,7 +333,9 @@
 @media (prefers-reduced-motion: reduce) {
   .vd-modal-backdrop,
   .vd-modal,
-  .vd-toast {
+  .vd-toast,
+  .vd-drawer-backdrop,
+  .vd-drawer {
     animation: none;
   }
 }
@@ -634,4 +636,79 @@ th.vd-grid__cell--pinned {
 }
 .vd-grid__table tr:nth-child(2n) {
   background: transparent;
+}
+
+/* ---------- 드로어 (측면 패널) ---------- */
+.vd-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  animation: vd-fade-in var(--vd-motion-fast) var(--vd-ease-out);
+}
+.vd-drawer {
+  font-family: var(--vd-font);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  max-width: 85vw;
+  background: var(--vd-bg);
+  box-shadow: var(--vd-shadow-prominent);
+  display: flex;
+  flex-direction: column;
+}
+.vd-drawer--right {
+  right: 0;
+  animation: vd-drawer-in-right var(--vd-motion-base) var(--vd-ease-out);
+}
+.vd-drawer--left {
+  left: 0;
+  animation: vd-drawer-in-left var(--vd-motion-base) var(--vd-ease-out);
+}
+@keyframes vd-drawer-in-right {
+  from { transform: translateX(100%); }
+}
+@keyframes vd-drawer-in-left {
+  from { transform: translateX(-100%); }
+}
+.vd-drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: var(--vd-space-5) var(--vd-space-5) var(--vd-space-3);
+}
+.vd-drawer__title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--vd-text);
+  margin: 0;
+}
+.vd-drawer__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  border-radius: var(--vd-radius-md);
+  color: var(--vd-text-sub);
+  cursor: pointer;
+}
+.vd-drawer__close:hover { background: var(--vd-surface); color: var(--vd-text); }
+.vd-drawer__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 var(--vd-space-5) var(--vd-space-5);
+  font-size: 14px;
+  color: var(--vd-text-sub);
+  line-height: 1.55;
+}
+.vd-drawer__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: var(--vd-space-3) var(--vd-space-5) var(--vd-space-5);
+  border-top: 1px solid var(--vd-border-subtle);
 }

@@ -52,7 +52,7 @@ const sidebars: SidebarsConfig = {
           type: 'category',
           label: 'Overlay',
           collapsible: false,
-          items: ['components/modal', 'components/menu', 'components/tooltip'],
+          items: ['components/modal', 'components/drawer', 'components/menu', 'components/tooltip'],
         },
         {
           type: 'category',

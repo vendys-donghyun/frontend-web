@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Badge, Button, DataGrid, Icon, ICON_NAMES, Modal, Pagination, Tabs, Toast, type DataGridColumn } from '@vendys/ui';
+import { Badge, Button, DataGrid, Drawer, Icon, ICON_NAMES, Modal, Pagination, Tabs, Toast, type DataGridColumn } from '@vendys/ui';
 import { typography } from '@vendys/tokens';
 
 export function TabsDemo() {
@@ -511,5 +511,44 @@ export function TypeScaleMini() {
         );
       })}
     </div>
+  );
+}
+
+export function DrawerDemo() {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <Button variant="secondary" onClick={() => setOpen(true)}>
+        상세 열기
+      </Button>
+      <Drawer
+        open={open}
+        onClose={() => setOpen(false)}
+        title="본죽 역삼점 정산 상세"
+        actions={
+          <>
+            <Button variant="secondary" onClick={() => setOpen(false)}>
+              닫기
+            </Button>
+            <Button onClick={() => setOpen(false)}>정산 확정</Button>
+          </>
+        }
+      >
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <div>
+            <div style={{ fontSize: 12.5, color: 'var(--vd-text-sub)' }}>정산 기간</div>
+            <div style={{ color: 'var(--vd-text)' }}>2026-07-01 ~ 2026-07-10</div>
+          </div>
+          <div>
+            <div style={{ fontSize: 12.5, color: 'var(--vd-text-sub)' }}>결제 건수</div>
+            <div style={{ color: 'var(--vd-text)' }}>128건</div>
+          </div>
+          <div>
+            <div style={{ fontSize: 12.5, color: 'var(--vd-text-sub)' }}>정산 금액</div>
+            <div style={{ color: 'var(--vd-text)', fontWeight: 700 }}>1,216,000원</div>
+          </div>
+        </div>
+      </Drawer>
+    </>
   );
 }
