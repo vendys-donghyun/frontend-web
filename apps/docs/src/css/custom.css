@@ -23,7 +23,9 @@
   flex-wrap: wrap;
   gap: 10px;
   align-items: center;
+  /* 데모는 라이트 캔버스 고정 - 다크 테마에서도 제품 화면 그대로 보여준다 */
   background: #fff;
+  color: var(--vd-text);
 }
 .demo--col { flex-direction: column; align-items: stretch; }
 
