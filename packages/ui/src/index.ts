@@ -8,6 +8,7 @@ export { Card, type CardProps } from './Card';
 export { Modal, type ModalProps } from './Modal';
 export { Drawer, type DrawerProps } from './Drawer';
 export { Toast, type ToastProps } from './Toast';
+export { Toaster, toast, type ToastOptions } from './Toaster';
 export { Icon, ICON_NAMES, type IconProps, type IconName } from './Icon';
 export { Spinner, type SpinnerProps } from './Spinner';
 export { Skeleton, type SkeletonProps } from './Skeleton';

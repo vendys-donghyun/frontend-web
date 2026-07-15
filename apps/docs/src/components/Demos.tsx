@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Badge, Button, DataGrid, Drawer, Icon, ICON_NAMES, Modal, Pagination, Tabs, Toast, type DataGridColumn } from '@vendys/ui';
+import { Badge, Button, DataGrid, Drawer, Icon, ICON_NAMES, Modal, Pagination, Tabs, Toast, Toaster, toast, type DataGridColumn } from '@vendys/ui';
 import { typography } from '@vendys/tokens';
 
 export function TabsDemo() {
@@ -57,21 +57,21 @@ export function LoadingDemo() {
 }
 
 export function ToastDemo() {
-  const [show, setShow] = useState(false);
-  const fire = () => {
-    setShow(true);
-    setTimeout(() => setShow(false), 3000);
-  };
   return (
     <>
-      <Button variant="secondary" onClick={fire}>
-        토스트 띄우기
+      <Toaster />
+      <Button variant="secondary" size="sm" onClick={() => toast('저장되었습니다')}>
+        성공
       </Button>
-      {show && (
-        <div className="vd-toast-viewport">
-          <Toast>저장되었습니다</Toast>
-        </div>
-      )}
+      <Button variant="secondary" size="sm" onClick={() => toast('저장하지 못했습니다', { tone: 'error' })}>
+        실패
+      </Button>
+      <Button variant="secondary" size="sm" onClick={() => toast('3건은 확인이 필요합니다', { tone: 'warning' })}>
+        주의
+      </Button>
+      <Button variant="secondary" size="sm" onClick={() => toast('새 정산 내역이 있습니다', { tone: 'info', duration: 5000 })}>
+        안내 (5초)
+      </Button>
     </>
   );
 }

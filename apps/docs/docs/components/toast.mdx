@@ -10,31 +10,51 @@ import { ToastDemo } from '@site/src/components/Demos';
 # Toast
 
 작업 결과를 짧게 알립니다. 문구는 과거형 한 문장입니다: "저장되었습니다".
-하단 중앙에 띄우고 3초 뒤 제거합니다.
+하단 중앙에 뜨고 기본 3초 뒤 사라집니다.
+
+**중복 호출을 허용합니다** - 연달아 호출하면 새 토스트가 아래에 붙고
+이전 것은 위로 밀려나며, 각자 타이머가 끝나면 페이드아웃됩니다.
+버튼을 연타해서 확인해 보세요.
+
+<div className="demo">
+  <ToastDemo />
+</div>
+
+## 사용법
+
+앱 루트에 `<Toaster />`를 한 번 두고, 어디서든 `toast()`를 호출합니다.
+
+```tsx
+// App.tsx
+<Toaster />
+
+// 아무 곳에서나
+toast('저장되었습니다');
+toast('저장하지 못했습니다', { tone: 'error' });
+toast('새 정산 내역이 있습니다', { tone: 'info', duration: 5000 });
+```
+
+## toast() 옵션
+
+| 옵션 | 타입 | 기본값 | 설명 |
+|---|---|---|---|
+| `tone` | `'success' \| 'error' \| 'warning' \| 'info'` | `'success'` | 톤별 배경·글자·점 색 |
+| `duration` | `number` | `3000` | 자동 소멸까지 ms |
+
+## 톤
+
+배지와 같은 문법(연한 배경 + 진한 같은 계열 글자)입니다.
 
 <div className="demo">
   <Toast>저장되었습니다</Toast>
   <Toast tone="error">저장하지 못했습니다</Toast>
   <Toast tone="warning">3건은 확인이 필요합니다</Toast>
   <Toast tone="info">새 정산 내역이 있습니다</Toast>
-  <ToastDemo />
 </div>
 
-```tsx
-// 하단 중앙 고정이 필요하면 viewport 컨테이너 안에 렌더링
-<div className="vd-toast-viewport">
-  <Toast>저장되었습니다</Toast>
-</div>
-```
-
-## Props
-
-| prop | 타입 | 기본값 | 설명 |
-|---|---|---|---|
-| `tone` | `'success' \| 'error' \| 'warning' \| 'info'` | `'success'` | 상태 점 색: 초록 / 빨강 / 주황 / 파랑 |
-
-`role="status"`가 적용되어 스크린리더에 자동으로 읽힙니다.
+표시체가 직접 필요하면 `<Toast tone="...">` 컴포넌트를 그대로 쓸 수도 있습니다.
 
 ## 규칙
 
 - 확인 버튼이 필요한 내용(되돌릴 수 없는 실패 등)은 토스트가 아니라 모달을 씁니다.
+- `role="status"`가 적용되어 스크린리더에 자동으로 읽힙니다.

@@ -324,10 +324,9 @@
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  /* 라이트 표면 - 제품 전체가 밝은 톤이라 반전(다크) 대신 보더+진한 그림자로 분리한다 */
-  background: var(--vd-bg);
-  color: var(--vd-text);
-  border: 1px solid var(--vd-border-subtle);
+  /* 톤별 연한 배경 + 진한 같은 계열 글자 (배지 weak 문법). 다크 반전 금지 */
+  background: var(--vd-primary-tint);
+  color: var(--vd-primary-active);
   font-size: 14px;
   border-radius: var(--vd-radius-md);
   padding: 12px 18px;
@@ -357,7 +356,14 @@
   flex: none;
   background: var(--vd-primary);
 }
+.vd-toast--error { background: var(--vd-error-tint); color: var(--vd-error); }
 .vd-toast--error .vd-toast__dot { background: var(--vd-error); }
+.vd-toast--warning { background: var(--vd-warning-tint); color: var(--vd-warning-text); }
+.vd-toast--info { background: var(--vd-info-tint); color: var(--vd-info); }
+.vd-toast--leaving { animation: vd-toast-out 150ms var(--vd-ease-out) forwards; }
+@keyframes vd-toast-out {
+  to { opacity: 0; transform: translateY(6px); }
+}
 .vd-toast-viewport {
   position: fixed;
   bottom: var(--vd-space-6);
@@ -839,3 +845,6 @@ th.vd-grid__cell--pinned {
 /* 토스트 상태 점 - warning / info */
 .vd-toast--warning .vd-toast__dot { background: var(--vd-warning); }
 .vd-toast--info .vd-toast__dot { background: var(--vd-info); }
+@media (prefers-reduced-motion: reduce) {
+  .vd-toast--leaving { animation: none; opacity: 0; }
+}
