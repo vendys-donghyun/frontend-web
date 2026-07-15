@@ -4,7 +4,7 @@ title: DataGrid
 sidebar_position: 20
 ---
 
-import { DataGridDemo, DataGridEmptyDemo } from '@site/src/components/Demos';
+import { DataGridDemo, DataGridEmptyDemo, DataGridPinnedDemo } from '@site/src/components/Demos';
 
 # DataGrid
 
@@ -37,6 +37,26 @@ const columns: DataGridColumn<SettlementRow>[] = [
 />
 ```
 
+## 컬럼 고정 · 셀 복사
+
+컬럼이 많아 가로 스크롤이 생기는 화면에서는 `pinned`로 좌/우 컬럼을 고정합니다
+(식별 컬럼은 왼쪽, 액션 컬럼은 오른쪽 - vone-web 관례와 동일). 고정 컬럼은 `width` 지정이 필수이고,
+선택 체크박스 열은 자동으로 맨 왼쪽에 고정됩니다.
+셀을 **우클릭하면 복사 메뉴**(셀 값 / 행 전체, 탭 구분)가 열립니다.
+
+<div className="demo demo--col">
+  <DataGridPinnedDemo />
+</div>
+
+```tsx
+{ field: 'store', headerName: '가맹점', width: 150, pinned: 'left' },
+{ field: 'actions', headerName: '액션', width: 90, pinned: 'right', sortable: false, render: ... },
+
+<DataGrid columns={columns} rows={rows} rowKey={(r) => r.id} minWidth={1240} />
+```
+
+붙여넣기(셀 편집·엑셀 대량 입력)는 지원하지 않습니다 - 편집 영역이라 ag-Grid를 유지합니다.
+
 ## 빈 상태 · compact 밀도
 
 행 36px의 compact 밀도는 어드민 화면용입니다 (vone-web 34px 참고).
@@ -55,6 +75,7 @@ const columns: DataGridColumn<SettlementRow>[] = [
 | `type` | `'text' \| 'number' \| 'date' \| 'datetime'` | number는 콤마+우측정렬, date는 YYYY-MM-DD. 빈값은 '-' |
 | `align` | `'left' \| 'center' \| 'right'` | 기본 left (number는 right) |
 | `sortable` | `boolean` | 기본 true. 헤더 클릭 → 오름/내림/해제 순환 |
+| `pinned` | `'left' \| 'right'` | 컬럼 고정. `width` 지정 필수, 가로 스크롤과 함께 사용 |
 | `render` | `(value, row) => ReactNode` | 커스텀 셀 (배지, 링크, 버튼) |
 | `valueGetter` | `(row) => unknown` | 표시·정렬 값 계산 |
 
@@ -71,6 +92,8 @@ const columns: DataGridColumn<SettlementRow>[] = [
 | `emptyMessage` | `string` | 기본 "조회된 데이터가 없습니다" |
 | `density` | `'standard' \| 'compact'` | 행 48 / 36 |
 | `height` | `number \| string` | 지정 시 헤더 고정 세로 스크롤 |
+| `minWidth` | `number` | 표 최소 폭. 컨테이너보다 크면 가로 스크롤 |
+| `enableCopy` | `boolean` | 기본 true. 셀 우클릭 복사 메뉴 |
 
 ## 범위
 

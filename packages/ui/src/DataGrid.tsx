@@ -1,22 +1,24 @@
-import { useMemo, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useState, type MouseEvent as ReactMouseEvent, type ReactNode } from 'react';
 import { Icon } from './Icon';
 import { Spinner } from './Spinner';
 
 /**
  * vone-web의 ag-Grid(ClientSideTable) 사용 패턴을 참고한 조회형 클라이언트 그리드.
- * 대량 편집·셋필터·서버사이드 로우 모델이 필요한 화면은 이 컴포넌트 대상이 아니다.
+ * 인라인 편집·셋필터·서버사이드 로우 모델·붙여넣기가 필요한 화면은 이 컴포넌트 대상이 아니다(ag-Grid 유지).
  */
 
 export interface DataGridColumn<T> {
   field: string;
   headerName: string;
-  /** px 고정폭. 지정하지 않으면 남은 폭을 균등 분배 */
+  /** px 고정폭. 지정하지 않으면 남은 폭을 균등 분배. pinned 컬럼은 고정폭 필수 */
   width?: number;
   /** number는 콤마+우측정렬+tabular-nums, date/datetime은 포맷 적용. null/빈값은 '-' */
   type?: 'text' | 'number' | 'date' | 'datetime';
   align?: 'left' | 'center' | 'right';
   /** 기본 true. 헤더 클릭으로 오름/내림/해제 순환 */
   sortable?: boolean;
+  /** 좌/우 고정. 가로 스크롤(minWidth)이 있을 때 의미가 있다. width 미지정 시 120px로 간주 */
+  pinned?: 'left' | 'right';
   /** 셀 커스텀 렌더링 (상태 배지, 링크, 액션 버튼 등) */
   render?: (value: unknown, row: T) => ReactNode;
   /** 표시·정렬에 쓸 값을 행에서 직접 계산 (기본은 row[field]) */
@@ -42,7 +44,13 @@ export interface DataGridProps<T> {
   density?: 'standard' | 'compact';
   /** 컨테이너 높이. 넘치면 헤더 고정 세로 스크롤 */
   height?: number | string;
+  /** 표 최소 폭(px). 컨테이너보다 크면 가로 스크롤 - pinned 컬럼과 함께 쓴다 */
+  minWidth?: number;
+  /** 셀 우클릭 복사 메뉴(셀 값/행). 기본 true. 붙여넣기는 지원하지 않는다(편집 영역) */
+  enableCopy?: boolean;
 }
+
+const PINNED_DEFAULT_WIDTH = 120;
 
 function formatValue(value: unknown, type: DataGridColumn<never>['type']): string {
   if (value === null || value === undefined || value === '') return '-';
@@ -83,9 +91,12 @@ export function DataGrid<T>({
   emptyMessage = '조회된 데이터가 없습니다',
   density = 'standard',
   height,
+  minWidth,
+  enableCopy = true,
 }: DataGridProps<T>) {
   const [sort, setSort] = useState<DataGridSort>(null);
   const [internalSelected, setInternalSelected] = useState<(string | number)[]>([]);
+  const [ctxMenu, setCtxMenu] = useState<{ x: number; y: number; cell: string; row: string } | null>(null);
   const selected = selectedKeys ?? internalSelected;
 
   const getValue = (col: DataGridColumn<T>, row: T) =>
@@ -98,6 +109,23 @@ export function DataGrid<T>({
     const dir = sort.direction === 'asc' ? 1 : -1;
     return [...rows].sort((a, b) => dir * compareValues(getValue(col, a), getValue(col, b), col.type));
   }, [rows, sort, columns]);
+
+  // 우클릭 복사 메뉴 - 바깥 클릭·ESC·스크롤에 닫힘
+  useEffect(() => {
+    if (!ctxMenu) return;
+    const close = () => setCtxMenu(null);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') close();
+    };
+    document.addEventListener('mousedown', close);
+    document.addEventListener('scroll', close, true);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', close);
+      document.removeEventListener('scroll', close, true);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [ctxMenu]);
 
   const cycleSort = (col: DataGridColumn<T>) => {
     if (col.sortable === false) return;
@@ -127,16 +155,76 @@ export function DataGrid<T>({
     updateSelection(selected.includes(key) ? selected.filter((k) => k !== key) : [...selected, key]);
   };
 
+  const openCopyMenu = (e: ReactMouseEvent, col: DataGridColumn<T>, row: T) => {
+    if (!enableCopy) return;
+    e.preventDefault();
+    setCtxMenu({
+      x: e.clientX,
+      y: e.clientY,
+      cell: formatValue(getValue(col, row), col.type),
+      row: columns.map((c) => formatValue(getValue(c, row), c.type)).join('\t'),
+    });
+  };
+
+  const copyText = (text: string) => {
+    void navigator.clipboard?.writeText(text);
+    setCtxMenu(null);
+  };
+
+  // 컬럼 고정 오프셋 - selection 열은 항상 맨 왼쪽 고정
+  const colWidth = (c: DataGridColumn<T>) => c.width ?? PINNED_DEFAULT_WIDTH;
+  const leftPinned = columns.filter((c) => c.pinned === 'left');
+  const rightPinned = columns.filter((c) => c.pinned === 'right');
+  const anyPinned = leftPinned.length > 0 || rightPinned.length > 0;
+  const leftOffsets = new Map<string, number>();
+  let leftAcc = selectable && anyPinned ? 40 : 0;
+  for (const c of leftPinned) {
+    leftOffsets.set(c.field, leftAcc);
+    leftAcc += colWidth(c);
+  }
+  const rightOffsets = new Map<string, number>();
+  let rightAcc = 0;
+  for (const c of [...rightPinned].reverse()) {
+    rightOffsets.set(c.field, rightAcc);
+    rightAcc += colWidth(c);
+  }
+  const leftEdgeField = leftPinned[leftPinned.length - 1]?.field;
+  const rightEdgeField = rightPinned[0]?.field;
+  const checkColPinned = Boolean(selectable && anyPinned);
+
+  const pinnedCell = (col: DataGridColumn<T>): { classes: string[]; style?: { left?: number; right?: number } } => {
+    if (col.pinned === 'left') {
+      return {
+        classes: ['vd-grid__cell--pinned', col.field === leftEdgeField ? 'vd-grid__cell--pinned-left-edge' : ''],
+        style: { left: leftOffsets.get(col.field) },
+      };
+    }
+    if (col.pinned === 'right') {
+      return {
+        classes: ['vd-grid__cell--pinned', col.field === rightEdgeField ? 'vd-grid__cell--pinned-right-edge' : ''],
+        style: { right: rightOffsets.get(col.field) },
+      };
+    }
+    return { classes: [] };
+  };
+
   const allKeys = sortedRows.map(rowKey);
   const allChecked = allKeys.length > 0 && allKeys.every((k) => selected.includes(k));
   const someChecked = allKeys.some((k) => selected.includes(k));
 
   const gridClass = ['vd-grid', density === 'compact' && 'vd-grid--compact'].filter(Boolean).join(' ');
+  const checkCellClass = [
+    checkColPinned && 'vd-grid__cell--pinned',
+    checkColPinned && leftPinned.length === 0 && 'vd-grid__cell--pinned-left-edge',
+  ]
+    .filter(Boolean)
+    .join(' ');
+  const checkCellStyle = checkColPinned ? { left: 0 } : undefined;
 
   return (
     <div className={gridClass} style={{ height }}>
       <div className="vd-grid__scroll">
-        <table className="vd-grid__table">
+        <table className="vd-grid__table" style={minWidth ? { minWidth } : undefined}>
           <colgroup>
             {selectable && <col style={{ width: 40 }} />}
             {columns.map((col) => (
@@ -146,7 +234,7 @@ export function DataGrid<T>({
           <thead>
             <tr>
               {selectable && (
-                <th className="vd-grid__th vd-grid__th--check">
+                <th className={['vd-grid__th', 'vd-grid__th--check', checkCellClass].filter(Boolean).join(' ')} style={checkCellStyle}>
                   {selectable === 'multi' && (
                     <input
                       type="checkbox"
@@ -165,12 +253,19 @@ export function DataGrid<T>({
                 const active = sort?.field === col.field;
                 const sortable = col.sortable !== false;
                 const align = col.align ?? (col.type === 'number' ? 'right' : 'left');
+                const pin = pinnedCell(col);
                 return (
                   <th
                     key={col.field}
-                    className={['vd-grid__th', sortable && 'vd-grid__th--sortable', `vd-grid__cell--${align}`]
+                    className={[
+                      'vd-grid__th',
+                      sortable && 'vd-grid__th--sortable',
+                      `vd-grid__cell--${align}`,
+                      ...pin.classes,
+                    ]
                       .filter(Boolean)
                       .join(' ')}
+                    style={pin.style}
                     aria-sort={active ? (sort!.direction === 'asc' ? 'ascending' : 'descending') : undefined}
                     onClick={() => cycleSort(col)}
                   >
@@ -196,7 +291,11 @@ export function DataGrid<T>({
                   onClick={onRowClick ? () => onRowClick(row) : undefined}
                 >
                   {selectable && (
-                    <td className="vd-grid__td vd-grid__td--check" onClick={(e) => e.stopPropagation()}>
+                    <td
+                      className={['vd-grid__td', 'vd-grid__td--check', checkCellClass].filter(Boolean).join(' ')}
+                      style={checkCellStyle}
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       <input
                         type="checkbox"
                         className="vd-check__input"
@@ -209,6 +308,7 @@ export function DataGrid<T>({
                   {columns.map((col) => {
                     const value = getValue(col, row);
                     const align = col.align ?? (col.type === 'number' ? 'right' : 'left');
+                    const pin = pinnedCell(col);
                     return (
                       <td
                         key={col.field}
@@ -216,9 +316,12 @@ export function DataGrid<T>({
                           'vd-grid__td',
                           `vd-grid__cell--${align}`,
                           col.type === 'number' && 'vd-grid__td--num',
+                          ...pin.classes,
                         ]
                           .filter(Boolean)
                           .join(' ')}
+                        style={pin.style}
+                        onContextMenu={(e) => openCopyMenu(e, col, row)}
                       >
                         {col.render ? col.render(value, row) : formatValue(value, col.type)}
                       </td>
@@ -234,6 +337,21 @@ export function DataGrid<T>({
       {loading && (
         <div className="vd-grid__overlay">
           <Spinner />
+        </div>
+      )}
+      {ctxMenu && (
+        <div
+          role="menu"
+          className="vd-menu__list vd-grid__ctx"
+          style={{ top: ctxMenu.y, left: ctxMenu.x }}
+          onMouseDown={(e) => e.stopPropagation()}
+        >
+          <button type="button" role="menuitem" className="vd-menu__item" onClick={() => copyText(ctxMenu.cell)}>
+            셀 값 복사
+          </button>
+          <button type="button" role="menuitem" className="vd-menu__item" onClick={() => copyText(ctxMenu.row)}>
+            행 복사 (탭 구분)
+          </button>
         </div>
       )}
     </div>

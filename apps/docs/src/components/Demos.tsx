@@ -428,3 +428,51 @@ export function DataGridEmptyDemo() {
     />
   );
 }
+
+/** 컬럼 고정(pinned) + 가로 스크롤 데모 */
+export function DataGridPinnedDemo() {
+  const columns: DataGridColumn<SettlementRow>[] = [
+    { field: 'store', headerName: '가맹점', width: 150, pinned: 'left' },
+    {
+      field: 'status',
+      headerName: '상태',
+      width: 100,
+      align: 'center',
+      render: (value) => <Badge tone={GRID_STATUS_TONE[String(value)] ?? 'neutral'}>{String(value)}</Badge>,
+    },
+    { field: 'settledAt', headerName: '정산일', type: 'date', width: 120 },
+    { field: 'count', headerName: '건수', type: 'number', width: 90 },
+    { field: 'amount', headerName: '금액(원)', type: 'number', width: 130 },
+    {
+      field: 'fee',
+      headerName: '수수료(원)',
+      type: 'number',
+      width: 110,
+      valueGetter: (row) => Math.round(row.amount * 0.033),
+    },
+    {
+      field: 'payout',
+      headerName: '지급액(원)',
+      type: 'number',
+      width: 120,
+      valueGetter: (row) => row.amount - Math.round(row.amount * 0.033),
+    },
+    { field: 'memo', headerName: '비고', width: 160, valueGetter: () => null },
+    {
+      field: 'actions',
+      headerName: '액션',
+      width: 90,
+      align: 'center',
+      sortable: false,
+      pinned: 'right',
+      render: () => (
+        <Button variant="ghost" size="sm">
+          상세
+        </Button>
+      ),
+    },
+  ];
+  return (
+    <DataGrid columns={columns} rows={GRID_ROWS} rowKey={(row) => row.id} selectable="multi" minWidth={1240} />
+  );
+}

@@ -360,12 +360,15 @@
 /* ---------- 테이블 (클래스 기반 패턴) ---------- */
 .vd-table {
   font-family: var(--vd-font);
+  display: table;
+  margin: 0;
   width: 100%;
   border-collapse: collapse;
   font-size: 13.5px;
   color: var(--vd-text);
 }
 .vd-table th {
+  border: none;
   background: var(--vd-surface);
   color: var(--vd-text-sub);
   font-size: 13px;
@@ -377,6 +380,7 @@
 .vd-table td {
   padding: 0 14px;
   height: 48px;
+  border: none;
   border-bottom: 1px solid var(--vd-border-subtle);
 }
 .vd-table tbody tr:hover td { background: var(--vd-gray-50); }
@@ -565,6 +569,9 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  /* flex/grid 부모 안에서 내부 표(minWidth)만큼 커지지 않게 - 넘치면 내부 가로 스크롤 */
+  min-width: 0;
+  max-width: 100%;
 }
 .vd-grid__scroll { overflow: auto; flex: 1; }
 .vd-grid__table {
@@ -578,6 +585,7 @@
   color: var(--vd-text);
 }
 .vd-grid__th {
+  border: none;
   position: sticky;
   top: 0;
   z-index: 1;
@@ -598,6 +606,7 @@
 .vd-grid__td {
   height: 48px;
   padding: 0 14px;
+  border: none;
   border-top: 1px solid var(--vd-border-subtle);
   white-space: nowrap;
   overflow: hidden;
@@ -635,3 +644,28 @@
 .vd-grid--compact .vd-grid__table { font-size: 12.5px; }
 .vd-grid--compact .vd-grid__th { height: 34px; font-size: 12px; padding: 0 10px; }
 .vd-grid--compact .vd-grid__td { height: 36px; padding: 0 10px; }
+
+/* 데이터 그리드 - 컬럼 고정 · 복사 메뉴 */
+.vd-grid__cell--pinned {
+  position: sticky;
+  z-index: 1;
+  background: var(--vd-bg);
+}
+th.vd-grid__cell--pinned {
+  z-index: 3;
+  background: var(--vd-surface);
+}
+.vd-grid__cell--pinned-left-edge { box-shadow: 4px 0 6px -4px rgba(0, 0, 0, 0.14); }
+.vd-grid__cell--pinned-right-edge { box-shadow: -4px 0 6px -4px rgba(0, 0, 0, 0.14); }
+.vd-grid__ctx { position: fixed; z-index: 1300; }
+
+/* 외부 전역 표 스타일(줄무늬·행 테두리) 무력화 - vd 표는 td 보더와 배경만 쓴다 */
+.vd-grid__table tr,
+.vd-table tr {
+  border: none;
+  background: transparent;
+}
+.vd-grid__table tr:nth-child(2n),
+.vd-table tr:nth-child(2n) {
+  background: transparent;
+}

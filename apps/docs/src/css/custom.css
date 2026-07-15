@@ -33,14 +33,14 @@
 .navbar__logo { height: 1.4rem; }
 
 /* 문서 표를 vd-table과 같은 문법으로 - 셀 테두리·줄무늬 대신 헤더 배경 + 가로 구분선 */
-.markdown table {
+.markdown table:not([class]) {
   font-size: 13.5px;
 }
-.markdown table thead tr {
+.markdown table:not([class]) thead tr {
   background: var(--vd-surface);
   border-bottom: none;
 }
-.markdown table th {
+.markdown table:not([class]) th {
   font-size: 13px;
   font-weight: 600;
   color: var(--vd-text-sub);
@@ -48,21 +48,21 @@
   border: none;
   padding: 10px 14px;
 }
-.markdown table td {
+.markdown table:not([class]) td {
   border: none;
   border-bottom: 1px solid var(--vd-border-subtle);
   padding: 10px 14px;
 }
-.markdown table tr:nth-child(2n) {
+.markdown table:not([class]) tr:nth-child(2n) {
   background: transparent;
 }
 
-[data-theme='dark'] .markdown table thead tr {
+[data-theme='dark'] .markdown table:not([class]) thead tr {
   background: rgba(255, 255, 255, 0.06);
 }
-[data-theme='dark'] .markdown table th {
+[data-theme='dark'] .markdown table:not([class]) th {
   color: rgba(255, 255, 255, 0.65);
 }
-[data-theme='dark'] .markdown table td {
+[data-theme='dark'] .markdown table:not([class]) td {
   border-bottom-color: rgba(255, 255, 255, 0.09);
 }
