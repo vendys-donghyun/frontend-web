@@ -27,6 +27,7 @@ const config: Config = {
   themeConfig: {
     navbar: {
       title: '현대벤디스 디자인 시스템',
+      logo: { alt: '현대벤디스', src: 'img/simbol.svg' },
       items: [{ href: 'https://github.com/vendys', label: 'GitHub', position: 'right' }],
     },
     footer: {
