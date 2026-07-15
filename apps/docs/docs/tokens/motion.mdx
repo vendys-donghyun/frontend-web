@@ -1,0 +1,39 @@
+---
+id: motion
+title: Motion
+sidebar_position: 4
+---
+
+import { MotionDemo } from '@site/src/components/Demos';
+
+# Motion
+
+모션은 상태 변화를 설명할 때만 씁니다 (등장, 펼침, 포커스).
+장식용 애니메이션은 쓰지 않습니다.
+
+## 토큰
+
+duration 두 단계와 easing 하나가 전부입니다. 임의의 duration(300ms, 180ms 등)을 만들지 않습니다.
+
+| 토큰 | 값 | 용도 |
+|---|---|---|
+| `--vd-motion-fast` | 150ms | 토스트, 페이드류 |
+| `--vd-motion-base` | 250ms | 모달, 바텀시트 |
+| `--vd-ease-out` | cubic-bezier(0.2, 0, 0, 1) | 빠르게 시작해 부드럽게 멈춤 |
+
+<div className="demo">
+  <MotionDemo />
+</div>
+
+## 적용된 곳
+
+컴포넌트에 이미 내장되어 있어 따로 붙일 필요가 없습니다.
+
+- **토스트**: 8px 아래에서 올라오며 페이드인 (fast)
+- **모달**: 배경 딤 페이드(fast) + 패널 0.97→1 스케일 페이드(base)
+- **바텀시트** (모바일 모달): 하단에서 슬라이드업 (base)
+
+## 규칙
+
+- 스프링·바운스·오버슈트는 쓰지 않습니다.
+- `prefers-reduced-motion: reduce` 설정에서는 등장 애니메이션이 전부 비활성화됩니다 (컴포넌트에 반영 완료).

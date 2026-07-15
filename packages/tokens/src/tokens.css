@@ -78,4 +78,9 @@
   --vd-control-sm: 32px;
   --vd-control-md: 40px;
   --vd-control-lg: 48px;
+
+  /* ---- 모션 (상태 설명 용도로만, 두 단계뿐) ---- */
+  --vd-motion-fast: 150ms; /* 토스트, 페이드류 */
+  --vd-motion-base: 250ms; /* 모달, 바텀시트 */
+  --vd-ease-out: cubic-bezier(0.2, 0, 0, 1);
 }

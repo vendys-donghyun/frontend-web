@@ -260,3 +260,37 @@ export function ControlScale() {
     </div>
   );
 }
+
+/** 모션 토큰 견본 - key 리마운트로 등장 애니메이션을 다시 재생한다 */
+export function MotionDemo() {
+  const [round, setRound] = useState(0);
+  return (
+    <div style={{ width: '100%' }}>
+      <Button variant="secondary" size="sm" onClick={() => setRound((r) => r + 1)}>
+        다시 재생
+      </Button>
+      <div key={round} style={{ display: 'flex', gap: 24, marginTop: 16, flexWrap: 'wrap', alignItems: 'flex-start' }}>
+        <div>
+          <div style={{ fontSize: 12, color: 'var(--vd-text-sub)', marginBottom: 8 }}>fast · 150ms - 토스트 등장</div>
+          <Toast>저장되었습니다</Toast>
+        </div>
+        <div>
+          <div style={{ fontSize: 12, color: 'var(--vd-text-sub)', marginBottom: 8 }}>base · 250ms - 모달 등장</div>
+          <div
+            style={{
+              width: 230,
+              padding: 16,
+              background: '#fff',
+              borderRadius: 'var(--vd-radius-lg)',
+              boxShadow: 'var(--vd-shadow-prominent)',
+              animation: 'vd-modal-in var(--vd-motion-base) var(--vd-ease-out)',
+            }}
+          >
+            <div style={{ fontSize: 14, fontWeight: 700 }}>정산을 확정할까요?</div>
+            <div style={{ fontSize: 12.5, color: 'var(--vd-text-sub)', marginTop: 4 }}>0.97 → 1 스케일 + 페이드</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

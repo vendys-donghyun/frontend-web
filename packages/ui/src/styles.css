@@ -257,6 +257,7 @@
   justify-content: center;
   z-index: 1000;
   padding: var(--vd-space-6);
+  animation: vd-fade-in var(--vd-motion-fast) var(--vd-ease-out);
 }
 .vd-modal {
   font-family: var(--vd-font);
@@ -266,6 +267,13 @@
   width: 100%;
   max-width: 480px;
   padding: var(--vd-space-6);
+  animation: vd-modal-in var(--vd-motion-base) var(--vd-ease-out);
+}
+@keyframes vd-fade-in {
+  from { opacity: 0; }
+}
+@keyframes vd-modal-in {
+  from { opacity: 0; transform: scale(0.97); }
 }
 .vd-modal__title {
   font-size: 17px;
@@ -287,6 +295,7 @@
     max-width: none;
     border-radius: var(--vd-radius-xl) var(--vd-radius-xl) 0 0;
     padding: var(--vd-space-5) var(--vd-space-4) var(--vd-space-4);
+    animation: vd-sheet-in var(--vd-motion-base) var(--vd-ease-out);
   }
   .vd-modal__grip {
     display: block;
@@ -312,6 +321,21 @@
   border-radius: var(--vd-radius-md);
   padding: 12px 18px;
   box-shadow: var(--vd-shadow-standard);
+  animation: vd-toast-in var(--vd-motion-fast) var(--vd-ease-out);
+}
+@keyframes vd-toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+}
+@keyframes vd-sheet-in {
+  from { transform: translateY(100%); }
+}
+/* 모션 축소 설정 존중 - 등장 애니메이션 전체 비활성 */
+@media (prefers-reduced-motion: reduce) {
+  .vd-modal-backdrop,
+  .vd-modal,
+  .vd-toast {
+    animation: none;
+  }
 }
 .vd-toast__dot {
   width: 8px;

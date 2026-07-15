@@ -175,9 +175,11 @@ Don't:
 
 ## 10. 모션
 
-- duration: fast 150ms(호버, 토글) · standard 200ms(드롭다운, 모달) · slow 300ms(페이지 전환)
-- easing: ease-in-out 기본. 스프링·바운스·오버슈트 금지.
-- 모션은 눈에 띄지 않아야 한다. prefers-reduced-motion 시 모두 제거.
+- duration은 두 단계뿐: `--vd-motion-fast` 150ms(토스트, 페이드류) · `--vd-motion-base` 250ms(모달, 바텀시트). 임의의 duration 금지.
+- easing은 하나: `--vd-ease-out` cubic-bezier(0.2, 0, 0, 1) — 빠르게 시작해 부드럽게 멈춤. 스프링·바운스·오버슈트 금지.
+- 모션은 상태 변화를 설명할 때만 쓴다(등장·펼침·포커스). 장식용 금지.
+- 적용된 등장 애니메이션: 토스트(8px 아래에서 페이드인), 모달(0.97→1 스케일+페이드), 바텀시트(하단 슬라이드업), 배경 딤(페이드).
+- prefers-reduced-motion: reduce 시 모두 제거.
 
 ## 11. 보이스 & 톤
 

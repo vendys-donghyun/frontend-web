@@ -75,6 +75,15 @@ export const typography = {
   },
 } as const;
 
+/** 모션은 두 단계뿐 — 등장 애니메이션 등 상태 설명 용도로만 쓴다. prefers-reduced-motion 존중 */
+export const motion = {
+  /** 토스트, 페이드류 */
+  fast: 150,
+  /** 모달, 바텀시트 */
+  base: 250,
+  easeOut: 'cubic-bezier(0.2, 0, 0, 1)',
+} as const;
+
 /** 브레이크포인트는 하나 — 767px 이하 모바일, 768px 이상 데스크톱 (태블릿 분기 없음) */
 export const breakpoints = { mobile: 767, desktop: 768 } as const;
 
