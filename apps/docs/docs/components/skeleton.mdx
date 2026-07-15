@@ -1,0 +1,47 @@
+---
+id: skeleton
+title: Skeleton
+---
+
+import { Skeleton, Card } from '@vendys/ui';
+
+# Skeleton
+
+로딩 중 콘텐츠의 형태를 미리 보여주는 자리 표시입니다.
+**최종 레이아웃과 같은 크기**로 배치해서 로딩이 끝나도 화면이 튀지 않게 합니다.
+
+<div className="demo">
+  <Card style={{ width: 260 }}>
+    <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 12 }}>
+      <Skeleton variant="circle" width={40} height={40} />
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
+        <Skeleton width="60%" />
+        <Skeleton width="40%" />
+      </div>
+    </div>
+    <Skeleton variant="rect" height={72} />
+  </Card>
+</div>
+
+```tsx
+{isLoading ? (
+  <>
+    <Skeleton width="60%" />
+    <Skeleton variant="rect" height={72} />
+  </>
+) : (
+  <정산요약 />
+)}
+```
+
+## Props
+
+| prop | 타입 | 기본값 | 설명 |
+|---|---|---|---|
+| `variant` | `'text' \| 'rect' \| 'circle'` | `'text'` | 한 줄 텍스트 / 블록 / 원형 |
+| `width` / `height` | `number \| string` | - | 최종 콘텐츠와 같은 크기로 지정 |
+
+## 스피너와의 구분
+
+- **Skeleton**: 어떤 모양의 콘텐츠가 올지 아는 화면 로딩 (목록, 카드, 상세)
+- **Spinner**: 버튼 내부, 형태를 예고할 수 없는 영역 로딩

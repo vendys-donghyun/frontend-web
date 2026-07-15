@@ -37,7 +37,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
       {...rest}
     >
       {loading && <span className="vd-btn__spinner" aria-hidden="true" />}
-      {children}
+      <span className={['vd-btn__label', loading && 'vd-btn__label--hidden'].filter(Boolean).join(' ')}>
+        {children}
+      </span>
     </button>
   );
 });

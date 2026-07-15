@@ -60,7 +60,16 @@
   border-color: transparent;
   cursor: not-allowed;
 }
-.vd-btn--loading { pointer-events: none; }
+.vd-btn--loading { pointer-events: none; position: relative; }
+.vd-btn__label { display: inline-flex; align-items: center; gap: 8px; }
+/* 로딩 중엔 스피너가 문구 위에 겹친다 - 폭이 변하지 않는다 */
+.vd-btn__label--hidden { opacity: 0; }
+.vd-btn--loading .vd-btn__spinner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -7px 0 0 -7px;
+}
 .vd-btn__spinner {
   width: 14px;
   height: 14px;
@@ -782,3 +791,51 @@ th.vd-grid__cell--pinned {
 .vd-grid__table tbody tr.vd-grid__row--selected:hover .vd-grid__td--in-range {
   background: var(--vd-primary-tint-active);
 }
+
+/* ---------- 스켈레톤 (로딩 자리 표시) ---------- */
+.vd-skeleton {
+  display: block;
+  background: var(--vd-gray-100);
+  animation: vd-skeleton-pulse 1.5s ease-in-out infinite;
+}
+.vd-skeleton--text { height: 1em; border-radius: var(--vd-radius-sm); }
+.vd-skeleton--rect { border-radius: var(--vd-radius-md); }
+.vd-skeleton--circle { border-radius: var(--vd-radius-full); }
+@keyframes vd-skeleton-pulse {
+  50% { opacity: 0.55; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vd-skeleton { animation: none; }
+}
+
+/* ---------- 브레드크럼 ---------- */
+.vd-breadcrumb {
+  font-family: var(--vd-font);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+}
+.vd-breadcrumb__item { display: inline-flex; align-items: center; gap: 6px; }
+.vd-breadcrumb__link {
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--vd-text-sub);
+  text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.vd-breadcrumb__link:hover { color: var(--vd-text); text-decoration: underline; }
+.vd-breadcrumb__text { color: var(--vd-text-sub); }
+.vd-breadcrumb__current { color: var(--vd-text); font-weight: 600; }
+.vd-breadcrumb__sep { display: inline-flex; color: var(--vd-gray-400); }
+
+/* 토스트 상태 점 - warning / info */
+.vd-toast--warning .vd-toast__dot { background: var(--vd-warning); }
+.vd-toast--info .vd-toast__dot { background: var(--vd-info); }

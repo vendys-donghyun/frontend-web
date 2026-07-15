@@ -1,0 +1,42 @@
+---
+id: breadcrumb
+title: Breadcrumb
+---
+
+import { Breadcrumb } from '@vendys/ui';
+
+# Breadcrumb
+
+현재 위치까지의 경로를 보여줍니다. 마지막 항목이 현재 위치이고 링크를 걸지 않습니다.
+
+<div className="demo">
+  <Breadcrumb
+    items={[
+      { label: '홈', href: '#' },
+      { label: '정산 관리', href: '#' },
+      { label: '본죽 역삼점' },
+    ]}
+  />
+</div>
+
+```tsx
+<Breadcrumb
+  items={[
+    { label: '홈', href: '/' },
+    { label: '정산 관리', onClick: () => navigate('/settlements') },
+    { label: '본죽 역삼점' },
+  ]}
+/>
+```
+
+## Props
+
+| prop | 타입 | 설명 |
+|---|---|---|
+| `items` | `{ label, href?, onClick? }[]` | 경로 목록. 마지막 항목이 현재 위치 (`aria-current="page"`) |
+
+`href`는 일반 링크, `onClick`은 라우터 이동용입니다. 현재 위치에는 둘 다 주지 않습니다.
+
+## 규칙
+
+- 항목이 4개를 넘으면 경로 축약보다 정보 구조를 줄이는 것부터 검토합니다.

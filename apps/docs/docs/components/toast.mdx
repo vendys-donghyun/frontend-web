@@ -15,6 +15,8 @@ import { ToastDemo } from '@site/src/components/Demos';
 <div className="demo">
   <Toast>저장되었습니다</Toast>
   <Toast tone="error">저장하지 못했습니다</Toast>
+  <Toast tone="warning">3건은 확인이 필요합니다</Toast>
+  <Toast tone="info">새 정산 내역이 있습니다</Toast>
   <ToastDemo />
 </div>
 
@@ -29,7 +31,7 @@ import { ToastDemo } from '@site/src/components/Demos';
 
 | prop | 타입 | 기본값 | 설명 |
 |---|---|---|---|
-| `tone` | `'success' \| 'error'` | `'success'` | 초록 점 / 빨간 점 |
+| `tone` | `'success' \| 'error' \| 'warning' \| 'info'` | `'success'` | 상태 점 색: 초록 / 빨강 / 주황 / 파랑 |
 
 `role="status"`가 적용되어 스크린리더에 자동으로 읽힙니다.
 

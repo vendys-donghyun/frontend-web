@@ -51,7 +51,7 @@ export function LoadingDemo() {
   };
   return (
     <Button loading={loading} onClick={run}>
-      {loading ? '저장 중' : '저장'}
+      저장
     </Button>
   );
 }

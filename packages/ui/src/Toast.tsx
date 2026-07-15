@@ -1,8 +1,8 @@
 import type { HTMLAttributes } from 'react';
 
 export interface ToastProps extends HTMLAttributes<HTMLDivElement> {
-  /** success(초록 점) / error(빨간 점) */
-  tone?: 'success' | 'error';
+  /** success(초록 점) / error(빨강) / warning(주황) / info(파랑) */
+  tone?: 'success' | 'error' | 'warning' | 'info';
 }
 
 /**
@@ -13,7 +13,7 @@ export function Toast({ tone = 'success', className, children, ...rest }: ToastP
   return (
     <div
       role="status"
-      className={['vd-toast', tone === 'error' && 'vd-toast--error', className].filter(Boolean).join(' ')}
+      className={['vd-toast', tone !== 'success' && `vd-toast--${tone}`, className].filter(Boolean).join(' ')}
       {...rest}
     >
       <span className="vd-toast__dot" aria-hidden="true" />

@@ -10,6 +10,8 @@ export { Drawer, type DrawerProps } from './Drawer';
 export { Toast, type ToastProps } from './Toast';
 export { Icon, ICON_NAMES, type IconProps, type IconName } from './Icon';
 export { Spinner, type SpinnerProps } from './Spinner';
+export { Skeleton, type SkeletonProps } from './Skeleton';
+export { Breadcrumb, type BreadcrumbProps, type BreadcrumbItem } from './Breadcrumb';
 export { Tooltip, type TooltipProps } from './Tooltip';
 export { Menu, type MenuProps, type MenuItem } from './Menu';
 export { Pagination, type PaginationProps } from './Pagination';

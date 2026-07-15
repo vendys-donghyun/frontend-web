@@ -43,7 +43,8 @@ lg는 radius도 12px로 커집니다.
 
 ## Loading
 
-비동기 동작 중에는 스피너를 표시하고 클릭을 차단합니다. 버튼 폭은 유지됩니다.
+비동기 동작 중에는 스피너가 문구 위에 겹쳐 표시되고 클릭이 차단됩니다.
+문구를 바꾸지 않아도 되고, 버튼 폭은 절대 변하지 않습니다.
 
 <div className="demo">
   <LoadingDemo />
@@ -51,7 +52,7 @@ lg는 radius도 12px로 커집니다.
 
 ```tsx
 <Button loading={saving} onClick={save}>
-  {saving ? '저장 중' : '저장'}
+  저장
 </Button>
 ```
 
