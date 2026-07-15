@@ -712,3 +712,56 @@ th.vd-grid__cell--pinned {
   padding: var(--vd-space-3) var(--vd-space-5) var(--vd-space-5);
   border-top: 1px solid var(--vd-border-subtle);
 }
+
+/* 데이터 그리드 - 범위 선택 · 컬럼 드래그 · 필터 */
+.vd-grid--selecting { user-select: none; }
+.vd-grid__td--in-range { background: var(--vd-primary-tint); }
+.vd-grid__th--drop-target { box-shadow: inset 3px 0 0 var(--vd-primary); }
+.vd-grid__filter-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: var(--vd-radius-sm);
+  color: var(--vd-gray-400);
+  cursor: pointer;
+}
+.vd-grid__filter-btn:hover { color: var(--vd-text-sub); background: var(--vd-gray-200); }
+.vd-grid__filter-btn--active { color: var(--vd-primary); }
+.vd-grid__filter-btn--active:hover { color: var(--vd-primary-hover); }
+.vd-grid__filter-panel {
+  position: fixed;
+  z-index: 1300;
+  width: 220px;
+  background: var(--vd-bg);
+  border: 1px solid var(--vd-border-subtle);
+  border-radius: var(--vd-radius-md);
+  box-shadow: var(--vd-shadow-standard);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  animation: vd-toast-in var(--vd-motion-fast) var(--vd-ease-out);
+}
+.vd-grid__filter-search {
+  height: var(--vd-control-sm);
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+.vd-grid__filter-list {
+  max-height: 220px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--vd-border-subtle);
+}
+.vd-grid__filter-item {
+  min-height: 30px;
+  font-size: 13px;
+}
+.vd-grid__filter-item .vd-check__input { width: 16px; height: 16px; }
+.vd-grid__filter-empty { padding: 10px 4px; font-size: 12.5px; color: var(--vd-text-disabled); }

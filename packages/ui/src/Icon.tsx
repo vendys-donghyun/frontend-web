@@ -41,6 +41,7 @@ const ICON_SHAPES: Record<string, ReactNode> = {
     </>
   ),
   more: <path d="M12 5h.01M12 12h.01M12 19h.01" />,
+  filter: <path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z" />,
   copy: (
     <>
       <rect x="8" y="8" width="13" height="13" rx="2" />
