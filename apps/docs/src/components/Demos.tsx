@@ -172,7 +172,17 @@ export function SpacingScale() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%' }}>
       {SPACE_STEPS.map(({ token, px, usage }) => (
         <div key={token} style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
-          <code style={{ width: 130, flexShrink: 0, fontSize: 12 }}>{token}</code>
+          <span
+            style={{
+              width: 130,
+              flexShrink: 0,
+              fontFamily: 'var(--ifm-font-family-monospace, monospace)',
+              fontSize: 12.5,
+              color: 'var(--vd-text)',
+            }}
+          >
+            {token}
+          </span>
           <span style={{ width: 40, flexShrink: 0, fontSize: 12.5, color: 'var(--vd-text-sub)', textAlign: 'right' }}>
             {px}px
           </span>
