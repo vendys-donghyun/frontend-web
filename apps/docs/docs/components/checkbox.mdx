@@ -1,0 +1,31 @@
+---
+id: checkbox
+title: Checkbox
+---
+
+import { Checkbox } from '@vendys/ui';
+
+# Checkbox
+
+여러 개를 동시에 선택할 수 있을 때 씁니다. 라벨을 포함해 전체가 클릭·터치 영역입니다.
+
+<div className="demo demo--col" style={{ gap: 4 }}>
+  <Checkbox defaultChecked>이용약관에 동의합니다</Checkbox>
+  <Checkbox>마케팅 수신에 동의합니다 (선택)</Checkbox>
+  <Checkbox disabled>비활성 항목</Checkbox>
+</div>
+
+```tsx
+<Checkbox checked={agreed} onChange={(e) => setAgreed(e.target.checked)}>
+  이용약관에 동의합니다
+</Checkbox>
+```
+
+## Props
+
+`input` 기본 속성(`checked`, `onChange`, `disabled` 등)을 그대로 받고 `children`이 라벨입니다.
+`ref` 전달을 지원합니다.
+
+## 규칙
+
+- 즉시 적용되는 on/off 설정은 Checkbox가 아니라 [Switch](/components/switch)를 씁니다.

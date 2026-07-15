@@ -20,7 +20,9 @@ const sidebars: SidebarsConfig = {
           collapsible: false,
           items: [
             'components/input',
-            'components/selection',
+            'components/select',
+            'components/checkbox',
+            'components/radio',
             'components/switch',
             'components/datepicker',
             'components/upload',

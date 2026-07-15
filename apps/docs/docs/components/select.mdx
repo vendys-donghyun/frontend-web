@@ -1,0 +1,37 @@
+---
+id: select
+title: Select
+---
+
+import { Select } from '@vendys/ui';
+
+# Select
+
+입력창과 같은 프레임을 씁니다. 모바일에서는 네이티브 드롭다운이 뜹니다.
+
+<div className="demo demo--col" style={{ maxWidth: 360 }}>
+  <Select label="정산 주기" defaultValue="month">
+    <option value="week">매주</option>
+    <option value="month">매월</option>
+  </Select>
+  <Select label="정산 은행" error="정산 은행을 선택해 주세요">
+    <option value="">선택</option>
+    <option value="kb">국민은행</option>
+    <option value="shinhan">신한은행</option>
+  </Select>
+</div>
+
+```tsx
+<Select label="정산 주기" value={cycle} onChange={(e) => setCycle(e.target.value)}>
+  <option value="week">매주</option>
+  <option value="month">매월</option>
+</Select>
+```
+
+## Props
+
+Input과 동일한 필드 문법입니다 (`label`, `help`, `error` + `select` 기본 속성).
+옵션은 `option` 요소를 children으로 넘깁니다.
+
+행동을 실행하는 용도(더 보기 메뉴)는 Select가 아니라 [Menu](/components/menu)를 씁니다 -
+Select는 값을 고르는 폼 컨트롤입니다.
