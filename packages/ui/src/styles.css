@@ -132,14 +132,77 @@
 }
 .vd-field__help--error { color: var(--vd-error); }
 
-/* ---------- 셀렉트 ---------- */
-.vd-select {
-  appearance: none;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%23616161' stroke-width='1.8' stroke-linecap='round'/></svg>");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  padding-right: 32px;
+/* ---------- 셀렉트 (커스텀 - 단일/다중/검색) ---------- */
+.vd-select-wrap { position: relative; }
+.vd-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  cursor: pointer;
+  text-align: left;
 }
+.vd-select-trigger__value {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.vd-select-trigger__value--empty { color: var(--vd-text-disabled); }
+.vd-select-trigger__chevron {
+  display: inline-flex;
+  flex: none;
+  color: var(--vd-text-sub);
+  transition: transform var(--vd-motion-fast) var(--vd-ease-out);
+}
+.vd-select-trigger--open { border-color: var(--vd-primary); box-shadow: var(--vd-focus-ring); }
+.vd-select-trigger--open .vd-select-trigger__chevron { transform: rotate(180deg); }
+.vd-select-panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 1050;
+  background: var(--vd-bg);
+  border: 1px solid var(--vd-border-subtle);
+  border-radius: var(--vd-radius-md);
+  box-shadow: var(--vd-shadow-standard);
+  padding: 4px;
+  animation: vd-toast-in var(--vd-motion-fast) var(--vd-ease-out);
+}
+.vd-select-panel__search {
+  height: var(--vd-control-sm);
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+.vd-select-panel__list {
+  max-height: 240px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.vd-select-option {
+  font-family: var(--vd-font);
+  font-size: 14px;
+  color: var(--vd-text);
+  min-height: 34px;
+  padding: 0 10px;
+  border-radius: var(--vd-radius-sm);
+}
+.vd-select-option--single {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.vd-select-option--single:hover:not(:disabled) { background: var(--vd-gray-50); }
+.vd-select-option--single:disabled { color: var(--vd-text-disabled); cursor: not-allowed; }
+.vd-select-option--selected { color: var(--vd-primary-active); font-weight: 600; }
+.vd-select-panel__empty { padding: 10px; font-size: 12.5px; color: var(--vd-text-disabled); }
 
 /* ---------- 체크박스 · 라디오 ---------- */
 .vd-check {
@@ -367,6 +430,12 @@
 .vd-toast-viewport {
   position: fixed;
   bottom: var(--vd-space-6);
+  /* 데스크톱은 하단 여백을 더 줘서 시야에 들어오게 */
+}
+@media (min-width: 768px) {
+  .vd-toast-viewport { bottom: var(--vd-space-12); }
+}
+.vd-toast-viewport {
   left: 50%;
   transform: translateX(-50%);
   z-index: 1100;

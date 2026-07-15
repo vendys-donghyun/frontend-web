@@ -1,5 +1,6 @@
 export { Button, type ButtonProps, type ButtonVariant, type ButtonSize } from './Button';
-export { Input, Select, type InputProps, type SelectProps } from './Input';
+export { Input, type InputProps } from './Input';
+export { Select, type SelectProps, type SelectOption } from './Select';
 export { Checkbox, Radio } from './Selection';
 export { Switch, type SwitchProps } from './Switch';
 export { Badge, type BadgeProps, type BadgeTone } from './Badge';

@@ -14,10 +14,13 @@ import { Form, FormActions, Input, Select, Checkbox, Button } from '@vendys/ui';
 <div className="demo demo--col" style={{ maxWidth: 400 }}>
   <Form>
     <Input label="회사명" placeholder="현대벤디스" />
-    <Select label="정산 주기" defaultValue="month">
-      <option value="week">매주</option>
-      <option value="month">매월</option>
-    </Select>
+    <Select
+      label="정산 주기"
+      options={[
+        { value: 'week', label: '매주' },
+        { value: 'month', label: '매월' },
+      ]}
+    />
     <Checkbox>이용약관에 동의합니다</Checkbox>
     <FormActions>
       <Button variant="secondary">취소</Button>
