@@ -114,3 +114,28 @@
 
 [data-theme='dark'] .ai-prompt__copy { border-color: var(--ifm-color-emphasis-300); color: var(--ifm-color-emphasis-600); }
 [data-theme='dark'] .ai-prompt__copy:hover { background: var(--ifm-color-emphasis-100); color: var(--ifm-color-emphasis-800); }
+
+/* AI 프롬프트 - OmD식 2단 배치 (좌: 설명, 우: 프롬프트 패널) */
+.ai-prompt-layout {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+}
+.ai-prompt-layout__docs {
+  flex: 1;
+  min-width: 0;
+}
+.ai-prompt-layout__panel {
+  flex: 1.25;
+  min-width: 0;
+  position: sticky;
+  top: calc(var(--ifm-navbar-height) + 16px);
+}
+.ai-prompt-layout__panel .ai-prompt__pre {
+  max-height: calc(100vh - var(--ifm-navbar-height) - 120px);
+}
+@media (max-width: 996px) {
+  .ai-prompt-layout { flex-direction: column; }
+  .ai-prompt-layout__panel { position: static; width: 100%; }
+  .ai-prompt-layout__panel .ai-prompt__pre { max-height: 480px; }
+}
