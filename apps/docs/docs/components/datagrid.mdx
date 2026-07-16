@@ -37,7 +37,7 @@ const columns: DataGridColumn<SettlementRow>[] = [
 />
 ```
 
-## 정렬 · 필터 · 컬럼 순서 변경
+## Sort · Filter · Column Reorder
 
 기본 데모에서 바로 써볼 수 있습니다:
 
@@ -45,7 +45,7 @@ const columns: DataGridColumn<SettlementRow>[] = [
 - **필터**: 헤더의 깔때기 아이콘 - 값 목록에서 체크로 거릅니다 (검색·전체 선택·초기화 포함, ag-Grid의 셋 필터 방식). 필터가 걸린 컬럼은 아이콘이 초록색이 됩니다
 - **컬럼 순서 변경**: 헤더를 드래그해서 원하는 위치에 놓습니다 (고정 컬럼은 같은 고정 그룹 안에서만)
 
-## 셀 범위 선택 · 복사
+## Range Selection · Copy
 
 셀을 누른 채 드래그하면 범위가 선택됩니다. 선택 후:
 
@@ -53,7 +53,7 @@ const columns: DataGridColumn<SettlementRow>[] = [
 - **우클릭** - 셀 값 복사 / 선택 영역 복사 / 행 복사 메뉴
 - **ESC** - 선택 해제
 
-## 컬럼 고정 · 셀 복사
+## Pinned Columns · Copy
 
 컬럼이 많아 가로 스크롤이 생기는 화면에서는 `pinned`로 좌/우 컬럼을 고정합니다
 (식별 컬럼은 왼쪽, 액션 컬럼은 오른쪽 - vone-web 관례와 동일). 고정 컬럼은 `width` 지정이 필수이고,
@@ -73,7 +73,7 @@ const columns: DataGridColumn<SettlementRow>[] = [
 
 붙여넣기(셀 편집·엑셀 대량 입력)는 지원하지 않습니다 - 편집 영역이라 ag-Grid를 유지합니다.
 
-## 빈 상태 · compact 밀도
+## Empty State · Compact Density
 
 행 36px의 compact 밀도는 어드민 화면용입니다 (vone-web 34px 참고).
 
@@ -81,7 +81,7 @@ const columns: DataGridColumn<SettlementRow>[] = [
   <DataGridEmptyDemo />
 </div>
 
-## 컬럼 정의 (DataGridColumn)
+## Columns (DataGridColumn)
 
 | 속성 | 타입 | 설명 |
 |---|---|---|
@@ -114,7 +114,7 @@ const columns: DataGridColumn<SettlementRow>[] = [
 | `columnReorder` | `boolean` | 기본 true. 헤더 드래그로 컬럼 순서 변경 |
 | `cellSelection` | `boolean` | 기본 true. 셀 드래그 범위 선택 + Ctrl/Cmd+C |
 
-## 범위
+## Scope
 
 이 컴포넌트는 **조회형 클라이언트 그리드**(vone-web 사용량의 대다수)를 대상으로 합니다.
 인라인 셀 편집, 서버사이드 로우 모델, 엑셀 붙여넣기(대량 입력)가

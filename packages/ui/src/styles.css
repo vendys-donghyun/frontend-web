@@ -1,5 +1,5 @@
 /**
- * @vendys/ui 컴포넌트 스타일 v0.2
+ * ui 컴포넌트 스타일 v0.0.1
  * @vendys/tokens/css 를 먼저 로드해야 한다.
  * 앱 진입점: import '@vendys/tokens/css'; import '@vendys/ui/styles.css';
  */
@@ -37,21 +37,26 @@
   color: var(--vd-primary-active);
 }
 .vd-btn--weak:hover:not(:disabled) { background: var(--vd-primary-tint-hover); }
+.vd-btn--weak:active:not(:disabled) { background: var(--vd-primary-tint-active); }
 .vd-btn--secondary {
   background: var(--vd-bg);
   color: var(--vd-gray-800);
   border-color: var(--vd-border);
 }
 .vd-btn--secondary:hover:not(:disabled) { background: var(--vd-surface); }
+.vd-btn--secondary:active:not(:disabled) { background: var(--vd-gray-200); }
 .vd-btn--ghost {
   background: transparent;
   color: var(--vd-primary);
 }
 .vd-btn--ghost:hover:not(:disabled) { background: var(--vd-primary-tint); }
+.vd-btn--ghost:active:not(:disabled) { background: var(--vd-primary-tint-hover); }
 .vd-btn--danger {
   background: var(--vd-error);
   color: #fff;
 }
+.vd-btn--danger:hover:not(:disabled) { background: var(--vd-error-hover); }
+.vd-btn--danger:active:not(:disabled) { background: var(--vd-error-active); }
 .vd-btn--sm { height: var(--vd-control-sm); padding: 0 12px; font-size: 13px; }
 .vd-btn--lg { height: var(--vd-control-lg); padding: 0 22px; font-size: 15px; border-radius: var(--vd-radius-lg); }
 .vd-btn:disabled {
@@ -61,14 +66,20 @@
   cursor: not-allowed;
 }
 .vd-btn--loading { pointer-events: none; position: relative; }
-.vd-btn__label { display: inline-flex; align-items: center; gap: 8px; }
-/* 로딩 중엔 스피너가 문구 위에 겹친다 - 폭이 변하지 않는다 */
-.vd-btn__label--hidden { opacity: 0; }
+.vd-btn__label { display: inline-flex; align-items: center; gap: 8px; transition: opacity 0s linear; }
+/* 로딩 중엔 스피너가 문구 위에 겹친다 - 폭이 변하지 않는다.
+   300ms 안에 끝나는 작업은 스피너를 보여주지 않는다(깜빡임 방지) - 클릭 차단은 즉시 */
+.vd-btn__label--hidden { opacity: 0; transition-delay: 300ms; }
 .vd-btn--loading .vd-btn__spinner {
   position: absolute;
   left: 50%;
   top: 50%;
   margin: -7px 0 0 -7px;
+  animation: vd-spin 0.8s linear infinite, vd-delayed-show 0s linear 300ms both;
+}
+@keyframes vd-delayed-show {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 .vd-btn__spinner {
   width: 14px;
@@ -137,6 +148,13 @@
   margin-top: 5px;
 }
 .vd-field__help--error { color: var(--vd-error); }
+/* 모바일 폼 입력은 터치 대상 확보를 위해 48px (문서 계약: D 40 / M 48) */
+@media (max-width: 767px) {
+  .vd-field > .vd-input,
+  .vd-field .vd-select-wrap > .vd-select-trigger {
+    height: var(--vd-control-lg);
+  }
+}
 
 /* ---------- 셀렉트 (커스텀 - 단일/다중/검색) ---------- */
 .vd-select-wrap { position: relative; }

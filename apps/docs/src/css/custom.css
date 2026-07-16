@@ -139,3 +139,63 @@
   .ai-prompt-layout__panel { position: static; width: 100%; }
   .ai-prompt-layout__panel .ai-prompt__pre { max-height: 480px; }
 }
+
+/* 데모 박스의 Figma 복사 버튼 - hover 시 우상단에 표시 */
+.demo { position: relative; }
+.demo-figma-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 5;
+  height: 26px;
+  padding: 0 8px;
+  font-family: var(--vd-font);
+  font-size: 11.5px;
+  color: var(--vd-text-sub);
+  background: var(--vd-bg);
+  border: 1px solid var(--vd-border);
+  border-radius: var(--vd-radius-sm);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--vd-motion-fast) var(--vd-ease-out);
+}
+.demo:hover .demo-figma-btn,
+.demo-figma-btn:focus-visible { opacity: 1; }
+.demo-figma-btn:hover { color: var(--vd-text); background: var(--vd-surface); }
+
+/* Figma 킷 보드 - 오버레이 컴포넌트를 정적 배치로 눕혀서 그린다 */
+.figma-kit {
+  background: #fff;
+  border: 1px solid var(--vd-border-subtle);
+  border-radius: var(--vd-radius-md);
+  padding: 24px;
+  color: var(--vd-text);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.figma-kit__label {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--vd-text-sub);
+  margin-bottom: 10px;
+}
+.figma-kit__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-start;
+}
+.figma-kit .figma-kit__modal,
+.figma-kit .figma-kit__drawer,
+.figma-kit .figma-kit__panel,
+.figma-kit .figma-kit__bubble {
+  position: static;
+  animation: none;
+  transform: none;
+  opacity: 1;
+}
+.figma-kit .figma-kit__drawer { height: 300px; max-width: none; }
+.figma-kit .figma-kit__bubble { display: inline-block; }

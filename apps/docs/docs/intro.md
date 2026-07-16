@@ -10,14 +10,14 @@ slug: /
 디자인 토큰과 공용 UI 컴포넌트를 하나의 기준으로 관리합니다.
 Desktop과 Mobile을 대상으로 합니다.
 
-## 패키지 구성
+## Modules
 
 | 패키지 | 역할 |
 |---|---|
 | `@vendys/tokens` | 디자인 토큰 - CSS 변수(`--vd-*`)와 TS 상수 |
 | `@vendys/ui` | 공용 UI 컴포넌트 (React) |
 
-## 설치
+## Install
 
 모노레포 내부에서는 workspace 프로토콜로 참조합니다.
 
@@ -30,7 +30,7 @@ Desktop과 Mobile을 대상으로 합니다.
 }
 ```
 
-## 사용
+## Usage
 
 앱 엔트리에서 토큰 CSS와 컴포넌트 스타일을 한 번 불러옵니다.
 
@@ -54,7 +54,7 @@ colors.primary; // '#43A047'
 radius.md;      // 8
 ```
 
-## 핵심 원칙
+## Core Principles
 
 - **Primary는 `#43A047` 하나** - 성공 상태(success)도 같은 색을 재사용합니다.
 - **폰트는 Pretendard** - 시스템 폰트 폴백을 포함한 스택을 사용합니다.

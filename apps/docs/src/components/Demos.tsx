@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Badge, Button, DataGrid, Drawer, Icon, ICON_NAMES, Modal, Pagination, Tabs, Toast, Toaster, toast, type DataGridColumn } from '@vendys/ui';
-import { typography } from '@vendys/tokens';
+import { colors, typography } from '@vendys/tokens';
 
 export function TabsDemo() {
   const [tab, setTab] = useState('all');
@@ -203,7 +203,7 @@ const RADIUS_STEPS = [
   { name: 'md', px: '8px', usage: '버튼(32·40), 인풋, 카드 기본' },
   { name: 'lg', px: '12px', usage: '큰 버튼(48), 모달' },
   { name: 'xl', px: '16px', usage: '바텀시트 상단' },
-  { name: 'full', px: '9999px', usage: '필형 요소' },
+  { name: 'full', px: '9999px', usage: '알약 모양(pill) 요소' },
 ];
 
 /** radius 토큰을 실제 모서리가 적용된 사각형으로 렌더링 */
@@ -384,7 +384,10 @@ export function DataGridDemo() {
 
   return (
     <div style={{ width: '100%' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+      <div
+        data-figma-exclude
+        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}
+      >
         <span style={{ fontSize: 13, color: 'var(--vd-text-sub)' }}>
           전체 {GRID_ROWS.length}건 · 선택 {selected.length}건
         </span>
@@ -478,23 +481,27 @@ export function DataGridPinnedDemo() {
   );
 }
 
-/** AI 프롬프트 페이지 좌측용 - 데스크톱 크기만 보여주는 컴팩트 타이포 견본 */
+/** AI 프롬프트 페이지 좌측용 - 토큰의 스케일 전체를 데스크톱 크기로 렌더링 (목록이 토큰과 어긋나지 않는다) */
 export function TypeScaleMini() {
-  const roles = [
-    { key: 'display', label: 'Display' },
-    { key: 'title', label: 'Title' },
-    { key: 'section', label: 'Section' },
-    { key: 'body', label: 'Body' },
-    { key: 'caption', label: 'Caption' },
-  ] as const;
+  const labels: Record<string, string> = {
+    displayLg: 'Display Large',
+    display: 'Display',
+    title: 'Title',
+    section: 'Section',
+    cardTitle: 'Card Title',
+    bodyLg: 'Body Large',
+    body: 'Body',
+    caption: 'Caption',
+  };
+  const keys = Object.keys(typography.scale) as (keyof typeof typography.scale)[];
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 14, width: '100%' }}>
-      {roles.map(({ key, label }) => {
+      {keys.map((key) => {
         const t = typography.scale[key];
         return (
           <div key={key}>
             <div style={{ fontSize: 11.5, color: 'var(--vd-text-sub)', marginBottom: 2 }}>
-              {label} · {t.desktop}px · {t.weight}
+              {labels[key] ?? key} · {t.desktop}px · {t.weight}
             </div>
             <div
               style={{
@@ -551,5 +558,55 @@ export function DrawerDemo() {
         </div>
       </Drawer>
     </>
+  );
+}
+
+/** AI 프롬프트 페이지 좌측용 - 토큰 값에서 직접 그리는 색상 요약 (hex가 어긋나지 않는다) */
+export function PaletteMini() {
+  const groups: { name: string; items: [string, string][] }[] = [
+    {
+      name: 'Primary',
+      items: [
+        ['primary', colors.primary],
+        ['primary-hover', colors.primaryHover],
+        ['primary-active', colors.primaryActive],
+        ['primary-tint', colors.primaryTint],
+        ['primary-tint-hover', colors.primaryTintHover],
+        ['primary-tint-active', colors.primaryTintActive],
+      ],
+    },
+    {
+      name: 'Semantic',
+      items: [
+        ['error', colors.error],
+        ['warning', colors.warning],
+        ['info', colors.info],
+      ],
+    },
+    {
+      name: 'Neutral',
+      items: [
+        ['text', colors.text],
+        ['text-sub', colors.textSub],
+        ['border', colors.border],
+        ['surface', colors.surface],
+      ],
+    },
+  ];
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16, width: '100%' }}>
+      {groups.map((group) => (
+        <div key={group.name}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--vd-text-sub)', marginBottom: 8 }}>
+            {group.name}
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+            {group.items.map(([name, hex]) => (
+              <Swatch key={name} color={hex} name={name} hex={hex} />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
   );
 }

@@ -1,7 +1,7 @@
 import { forwardRef, type InputHTMLAttributes, type ReactNode } from 'react';
 
 interface CheckBaseProps extends InputHTMLAttributes<HTMLInputElement> {
-  /** 체크 요소 옆 라벨. 터치 영역은 라벨 포함 확보된다 */
+  /** 체크 요소 옆 라벨. 라벨까지 터치 영역에 포함된다 */
   children?: ReactNode;
 }
 

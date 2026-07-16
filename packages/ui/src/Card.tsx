@@ -1,7 +1,7 @@
 import type { HTMLAttributes } from 'react';
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
-  /** 떠 있는 카드(클릭해 뜨는 패널 등)에만 subtle 그림자 적용 */
+  /** 다른 내용 위에 떠 있는 패널에만 subtle 그림자 적용 */
   elevated?: boolean;
 }
 

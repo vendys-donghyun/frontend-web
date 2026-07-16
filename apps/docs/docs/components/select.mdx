@@ -10,7 +10,7 @@ import { Select } from '@vendys/ui';
 입력창과 같은 프레임의 커스텀 셀렉트입니다. 단일 선택이 기본이고,
 `multiple`(다중 선택)과 `searchable`(검색) 옵션을 조합할 수 있습니다.
 
-## 단일 선택
+## Single Select
 
 <div className="demo demo--col" style={{ maxWidth: 360 }}>
   <Select
@@ -35,7 +35,7 @@ import { Select } from '@vendys/ui';
 />
 ```
 
-## 다중 선택 (multiple)
+## Multiple
 
 체크박스로 여러 개를 고릅니다. 선택해도 패널이 닫히지 않고,
 선택된 라벨이 트리거에 이어서 표시됩니다.
@@ -58,7 +58,7 @@ import { Select } from '@vendys/ui';
 <Select multiple value={stores} onChange={setStores} options={storeOptions} />
 ```
 
-## 검색 (searchable)
+## Searchable
 
 옵션이 많을 때 패널 상단에서 검색으로 거릅니다. multiple과 함께 쓸 수 있습니다.
 
@@ -89,7 +89,7 @@ import { Select } from '@vendys/ui';
 | `placeholder` | `string` | `'선택'` | 미선택 시 표시 문구 |
 | `label` / `help` / `error` | `string` | - | 필드 공통 문법 |
 
-## 규칙
+## Guidelines
 
-- 선택지가 5개 이하면 [Radio](/components/radio)(단일)나 [Checkbox](/components/checkbox)(다중) 나열을 먼저 검토합니다.
-- 행동을 실행하는 용도(더 보기 메뉴)는 [Menu](/components/menu)를 씁니다 - Select는 값을 고르는 폼 컨트롤입니다.
+- 선택지가 5개 이하면 [Radio](./radio.mdx)(단일)나 [Checkbox](./checkbox.mdx)(다중) 나열을 먼저 검토합니다.
+- 행동을 실행하는 용도(더 보기 메뉴)는 [Menu](./menu.mdx)를 씁니다 - Select는 값을 고르는 폼 컨트롤입니다.

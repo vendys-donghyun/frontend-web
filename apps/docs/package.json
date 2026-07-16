@@ -24,6 +24,7 @@
     "@vendys/tokens": "workspace:*",
     "@vendys/ui": "workspace:*",
     "clsx": "^2.0.0",
+    "dom-to-svg": "^0.12.2",
     "prism-react-renderer": "^2.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

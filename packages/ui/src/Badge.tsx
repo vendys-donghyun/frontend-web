@@ -3,7 +3,7 @@ import type { HTMLAttributes } from 'react';
 export type BadgeTone = 'success' | 'neutral' | 'warning' | 'error';
 
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
-  /** 성공(초록) / 중립(회색) / 주의(주황) / 실패(빨강) — weak 톤이 기본형 */
+  /** 성공(초록) / 중립(회색) / 주의(주황) / 실패(빨강) - weak 톤이 기본형 */
   tone?: BadgeTone;
 }
 

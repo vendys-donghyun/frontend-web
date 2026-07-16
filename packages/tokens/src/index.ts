@@ -1,5 +1,5 @@
 /**
- * 현대벤디스 디자인 토큰 v0.2 — TS 상수
+ * 현대벤디스 디자인 토큰 v0.0.1 - TS 상수
  * CSS 변수(tokens.css)와 같은 값을 JS에서 참조할 때 사용한다.
  * 원천 문서: packages/tokens/DESIGN.md
  */
@@ -31,6 +31,10 @@ export const colors = {
   bg: '#FFFFFF',
   surface: '#F5F5F5',
   error: '#D32F2F',
+  /** Material Red 800 - danger 버튼 hover */
+  errorHover: '#C62828',
+  /** Material Red 900 - danger 버튼 pressed */
+  errorActive: '#B71C1C',
   errorTint: '#FDECEA',
   warning: '#F57C00',
   warningTint: '#FFF3E0',
@@ -46,7 +50,7 @@ export const spacing = [4, 8, 12, 16, 20, 24, 32, 40, 48, 64] as const;
 
 export const radius = {
   sm: 4,
-  /** 기본값 — 버튼(sm·md)·입력창·카드 */
+  /** 기본값 - 버튼(sm·md)·입력창·카드 */
   md: 8,
   /** 모달, lg 버튼 */
   lg: 12,
@@ -65,7 +69,7 @@ export const typography = {
   fontFamily:
     "'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif",
   letterSpacing: '-0.2px',
-  /** Desktop / Mobile 이원 스케일 */
+  /** Desktop / Mobile 스케일 */
   scale: {
     /** 홈페이지 등 마케팅 화면 전용 초대형 제목. 서비스 화면에서는 display까지만 쓴다 */
     displayLg: { desktop: 52, mobile: 36, weight: 700 },
@@ -79,7 +83,7 @@ export const typography = {
   },
 } as const;
 
-/** 모션은 두 단계뿐 — 등장 애니메이션 등 상태 설명 용도로만 쓴다. prefers-reduced-motion 존중 */
+/** 모션은 두 단계뿐 - 등장 애니메이션 등 상태 설명 용도로만 쓴다. prefers-reduced-motion 존중 */
 export const motion = {
   /** 토스트, 페이드류 */
   fast: 150,
@@ -88,7 +92,7 @@ export const motion = {
   easeOut: 'cubic-bezier(0.2, 0, 0, 1)',
 } as const;
 
-/** 브레이크포인트는 하나 — 767px 이하 모바일, 768px 이상 데스크톱 (태블릿 분기 없음) */
+/** 브레이크포인트는 하나 - 767px 이하 모바일, 768px 이상 데스크톱 (태블릿 분기 없음) */
 export const breakpoints = { mobile: 767, desktop: 768 } as const;
 
 /** 터치 대상 최소 44px. 컨트롤 높이 Desktop 40 / Mobile 48 */

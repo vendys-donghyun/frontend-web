@@ -1,0 +1,59 @@
+# 디자인 시스템 문서(apps/docs)를 GitHub Pages에 배포
+# main 푸시 중 문서에 영향을 주는 경로가 바뀌었을 때만 실행된다
+name: docs-deploy
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/docs/**'
+      - 'packages/tokens/**'
+      - 'packages/ui/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'turbo.json'
+      - '.github/workflows/docs-deploy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: docs-deploy
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # pnpm 버전은 package.json의 packageManager 필드를 따른다 (중복 지정 시 액션이 거부)
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Build packages (docs가 dist를 소비)
+        run: pnpm exec turbo run build --filter='docs^...'
+      # turbo를 거치지 않고 직접 실행 - DOCS_BASE_URL 환경 변수를 그대로 전달하기 위해
+      - name: Build docs
+        run: pnpm --filter docs build
+        env:
+          DOCS_BASE_URL: /frontend-web/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/docs/build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

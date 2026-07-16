@@ -39,10 +39,10 @@ const [open, setOpen] = useState(false);
 |---|---|---|
 | `open` | `boolean` | 표시 여부 |
 | `onClose` | `() => void` | 닫기 요청(배경 클릭, ESC). 확정 동작은 actions 버튼으로 |
-| `title` | `string` | 제목. 질문형 권장: "정산을 확정할까요?" |
+| `title` | `string` | 제목. 결정을 묻는 모달은 질문형 권장: "정산을 확정할까요?" |
 | `actions` | `ReactNode` | 하단 버튼. Desktop 우측 정렬(취소 왼쪽), Mobile 풀폭 세로 전환 |
 
-## 규칙
+## Guidelines
 
-- 제목은 행동을 묻는 질문형으로 씁니다: "정산을 확정할까요?"
+- 결정을 묻는 모달의 제목은 질문형으로 씁니다: "정산을 확정할까요?". 폼·안내 모달은 명사형 제목을 씁니다: "주소 검색"
 - 주요 동작 버튼이 오른쪽(Mobile에서는 위)입니다.

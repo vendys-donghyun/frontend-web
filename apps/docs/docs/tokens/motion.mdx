@@ -11,7 +11,7 @@ import { MotionDemo } from '@site/src/components/Demos';
 모션은 상태 변화를 설명할 때만 씁니다 (등장, 펼침, 포커스).
 장식용 애니메이션은 쓰지 않습니다.
 
-## 토큰
+## Tokens
 
 duration 두 단계와 easing 하나가 전부입니다. 임의의 duration(300ms, 180ms 등)을 만들지 않습니다.
 
@@ -25,7 +25,7 @@ duration 두 단계와 easing 하나가 전부입니다. 임의의 duration(300m
   <MotionDemo />
 </div>
 
-## 적용된 곳
+## Built-in Animations
 
 컴포넌트에 이미 내장되어 있어 따로 붙일 필요가 없습니다.
 
@@ -33,7 +33,7 @@ duration 두 단계와 easing 하나가 전부입니다. 임의의 duration(300m
 - **모달**: 배경 딤 페이드(fast) + 패널 0.97→1 스케일 페이드(base)
 - **바텀시트** (모바일 모달): 하단에서 슬라이드업 (base)
 
-## 규칙
+## Guidelines
 
 - 스프링·바운스·오버슈트는 쓰지 않습니다.
 - `prefers-reduced-motion: reduce` 설정에서는 등장 애니메이션이 전부 비활성화됩니다 (컴포넌트에 반영 완료).

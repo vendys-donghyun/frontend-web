@@ -36,6 +36,8 @@
 
   /* ---- 상태 색 (success는 primary 재사용) ---- */
   --vd-error: #d32f2f;
+  --vd-error-hover: #c62828; /* Material Red 800 - danger 버튼 hover */
+  --vd-error-active: #b71c1c; /* Material Red 900 - danger 버튼 pressed */
   --vd-error-tint: #fdecea;
   --vd-warning: #f57c00;
   --vd-warning-tint: #fff3e0;

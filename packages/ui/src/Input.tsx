@@ -5,7 +5,7 @@ interface FieldBaseProps {
   label?: string;
   /** 아래 12px 도움말 */
   help?: string;
-  /** 오류 문구 — 원인과 해결을 구체적으로. 설정 시 오류 상태로 표시 */
+  /** 오류 문구 - 원인과 해결을 구체적으로. 설정 시 오류 상태로 표시 */
   error?: string;
 }
 

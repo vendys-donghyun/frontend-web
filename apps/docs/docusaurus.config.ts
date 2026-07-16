@@ -6,10 +6,13 @@ const config: Config = {
   title: '현대벤디스',
   tagline: '디자인 토큰과 공용 UI 컴포넌트',
   favicon: 'img/favicon.ico',
-  url: 'https://design.vendys.co.kr',
-  baseUrl: '/',
+  // GitHub Pages 초안 배포 기준. 커스텀 도메인이 정해지면 url만 바꾼다
+  url: 'https://vendys-donghyun.github.io',
+  // 로컬은 '/', Pages 빌드는 워크플로가 '/frontend-web/' 주입
+  baseUrl: process.env.DOCS_BASE_URL ?? '/',
   onBrokenLinks: 'throw',
   markdown: { hooks: { onBrokenMarkdownLinks: 'warn' } },
+  clientModules: ['./src/clientModules/figmaCopy.ts'],
   i18n: { defaultLocale: 'ko', locales: ['ko'] },
   presets: [
     [

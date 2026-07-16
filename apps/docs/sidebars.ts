@@ -4,6 +4,7 @@ const sidebars: SidebarsConfig = {
   docs: [
     'intro',
     'ai-prompt',
+    'figma-kit',
     {
       type: 'category',
       label: '디자인 토큰',

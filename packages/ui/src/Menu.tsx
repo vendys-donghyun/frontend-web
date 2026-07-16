@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 export interface MenuItem {
   label: string;
   onSelect?: () => void;
-  /** 파괴적 동작(삭제 등) */
+  /** 삭제처럼 되돌릴 수 없는 동작이면 true - 빨간 글자로 표시 */
   danger?: boolean;
   disabled?: boolean;
 }
