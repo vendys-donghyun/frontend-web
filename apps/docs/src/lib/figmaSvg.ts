@@ -138,6 +138,45 @@ function fixOverflowMasks(svgDocument: Document): void {
   });
 }
 
+/**
+ * 테두리 stroke를 채움 도형 두 장으로 분해한다.
+ * SVG stroke는 경계선에 반씩 걸치고 Figma는 정렬 해석이 또 달라서 모서리가 어긋나 보인다.
+ * CSS처럼 "바깥 = 테두리색, 안쪽(테두리 두께만큼 축소, 반경도 축소) = 배경색"의 채움 2장으로
+ * 바꾸면 해석 차이가 개입할 여지가 없다.
+ */
+function splitBorderStrokes(svgDocument: Document): void {
+  svgDocument.querySelectorAll('g[data-stacking-layer="rootBackgroundAndBorders"] > rect[stroke]').forEach((rect) => {
+    const stroke = rect.getAttribute('stroke') ?? '';
+    if (!stroke || stroke === 'none') return;
+    const strokeWidth = Number.parseFloat(rect.getAttribute('stroke-width') ?? '1') || 1;
+
+    const x = Number.parseFloat(rect.getAttribute('x') ?? '0');
+    const y = Number.parseFloat(rect.getAttribute('y') ?? '0');
+    const width = Number.parseFloat(rect.getAttribute('width') ?? '0');
+    const height = Number.parseFloat(rect.getAttribute('height') ?? '0');
+    const rx = Number.parseFloat(rect.getAttribute('rx') ?? '0') || 0;
+    const fill = rect.getAttribute('fill') ?? 'none';
+
+    // 바깥 사각형 - 테두리색 채움
+    rect.removeAttribute('stroke');
+    rect.removeAttribute('stroke-width');
+    rect.setAttribute('fill', stroke);
+
+    // 안쪽 사각형 - 원래 배경색 채움
+    const inner = rect.cloneNode(false) as Element;
+    inner.removeAttribute('filter');
+    inner.setAttribute('x', String(x + strokeWidth));
+    inner.setAttribute('y', String(y + strokeWidth));
+    inner.setAttribute('width', String(Math.max(0, width - strokeWidth * 2)));
+    inner.setAttribute('height', String(Math.max(0, height - strokeWidth * 2)));
+    const innerRadius = Math.max(0, rx - strokeWidth);
+    inner.setAttribute('rx', String(innerRadius));
+    inner.setAttribute('ry', String(innerRadius));
+    inner.setAttribute('fill', fill);
+    rect.parentNode?.insertBefore(inner, rect.nextSibling);
+  });
+}
+
 interface ShadowTarget {
   tag: string;
   ordinal: number;
@@ -366,6 +405,7 @@ export async function copyElementAsFigmaSvg(target: HTMLElement): Promise<void> 
     await inlineResources(svgDocument.documentElement);
     fixTextGeometry(svgDocument);
     fixOverflowMasks(svgDocument);
+    splitBorderStrokes(svgDocument);
     applyBoxShadows(svgDocument, shadowTargets);
     const svgText = new XMLSerializer().serializeToString(svgDocument);
     await navigator.clipboard.writeText(svgText);
