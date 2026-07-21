@@ -64,16 +64,69 @@ function createSpinnerArc(size: number, trackColor: string, headColor: string): 
   return svg;
 }
 
+type TextAnchor = 'start' | 'middle' | 'end';
+
+/**
+ * 마운트된 클론의 텍스트 노드를 문서 순서로 돌며 실제 정렬을 감지한다.
+ * 텍스트보다 넓은 가장 가까운 컨테이너의 패딩 박스와 비교해서
+ * 가운데면 middle, 오른쪽 끝이 맞으면 end, 그 외에는 start.
+ * (패딩 박스 기준이라 버튼·배지처럼 내용에 맞춰 줄어드는 요소도 정렬 컨테이너로 잡힌다)
+ */
+function detectTextAnchors(clone: HTMLElement): TextAnchor[] {
+  const anchors: TextAnchor[] = [];
+  const walker = document.createTreeWalker(clone, NodeFilter.SHOW_TEXT);
+  let node = walker.nextNode();
+  while (node) {
+    const current = node;
+    node = walker.nextNode();
+    if (!current.textContent || !current.textContent.trim()) continue;
+
+    const range = document.createRange();
+    range.selectNodeContents(current);
+    const rect = range.getBoundingClientRect();
+    if (rect.width === 0 && rect.height === 0) continue;
+
+    let container: { left: number; right: number } | null = null;
+    let el: HTMLElement | null = current.parentElement;
+    while (el && el !== clone.parentElement) {
+      const cs = getComputedStyle(el);
+      const box = el.getBoundingClientRect();
+      const left = box.left + Number.parseFloat(cs.borderLeftWidth);
+      const right = box.right - Number.parseFloat(cs.borderRightWidth);
+      if (right - left > rect.width + 2) {
+        container = { left, right };
+        break;
+      }
+      el = el.parentElement;
+    }
+    if (!container) {
+      anchors.push('middle');
+      continue;
+    }
+    const containerCenter = (container.left + container.right) / 2;
+    const textCenter = rect.left + rect.width / 2;
+    if (Math.abs(textCenter - containerCenter) <= 1.5) anchors.push('middle');
+    else if (Math.abs(rect.right - container.right) <= 1.5) anchors.push('end');
+    else anchors.push('start');
+  }
+  return anchors;
+}
+
 /**
  * 텍스트 좌표를 Figma가 그대로 해석할 수 있는 형태로 재계산한다.
  * - 세로: text-after-edge(글자 상자 바닥) 기준 y를 베이스라인 기준으로. 폰트별 descent를 캔버스로 실측
- * - 가로: 시작점(x) + 폭 맞춤(textLength) 방식을 Figma가 무시한다 - 중심점 + 가운데 앵커로 바꿔서
- *   글자 폭이 달라져도 좌우로 균등하게 퍼지게 한다 (우측 쏠림 방지)
+ * - 가로: 폭 맞춤(textLength)을 Figma가 무시해 글자 폭 차이가 생긴다 - 원본 정렬대로
+ *   가운데 텍스트는 중심점 앵커, 오른쪽 정렬은 끝점 앵커, 왼쪽 정렬은 시작점 앵커로 바꿔서
+ *   폭이 달라져도 정렬 기준선이 유지되게 한다
  */
-function fixTextGeometry(svgDocument: Document): void {
+function fixTextGeometry(svgDocument: Document, anchors: TextAnchor[]): void {
   const ctx = document.createElement('canvas').getContext('2d');
   if (!ctx) return;
-  svgDocument.querySelectorAll('text').forEach((text) => {
+  const texts = Array.from(svgDocument.querySelectorAll('text'));
+  // 원본 텍스트 노드와 출력 text 요소는 문서 순서가 같다 - 개수가 어긋나면 전부 middle로 폴백
+  const anchorFor = (index: number): TextAnchor =>
+    anchors.length === texts.length ? anchors[index] : 'middle';
+  texts.forEach((text, textIndex) => {
     const fontStyle = text.getAttribute('font-style') ?? 'normal';
     const fontWeight = text.getAttribute('font-weight') ?? '400';
     const fontSize = text.getAttribute('font-size') ?? '16px';
@@ -83,7 +136,8 @@ function fixTextGeometry(svgDocument: Document): void {
 
     const isAfterEdge = text.getAttribute('dominant-baseline') === 'text-after-edge';
     text.removeAttribute('dominant-baseline');
-    text.setAttribute('text-anchor', 'middle');
+    const anchor = anchorFor(textIndex);
+    text.setAttribute('text-anchor', anchor);
     // Figma에 Variable판이 없으면 엉뚱한 글꼴로 대체돼 세로 위치가 어긋난다 - static Pretendard 우선
     if (fontFamily.includes('Pretendard')) {
       text.setAttribute('font-family', "Pretendard, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif");
@@ -95,9 +149,10 @@ function fixTextGeometry(svgDocument: Document): void {
         tspan.setAttribute('y', String(Math.round((y - descent) * 100) / 100));
       }
       const width = Number.parseFloat(tspan.getAttribute('textLength') ?? '');
-      if (tspan.hasAttribute('x') && Number.isFinite(width)) {
+      if (tspan.hasAttribute('x') && Number.isFinite(width) && anchor !== 'start') {
         const x = Number.parseFloat(tspan.getAttribute('x') ?? '0');
-        tspan.setAttribute('x', String(Math.round((x + width / 2) * 100) / 100));
+        const anchored = anchor === 'middle' ? x + width / 2 : x + width;
+        tspan.setAttribute('x', String(Math.round(anchored * 100) / 100));
       }
       tspan.removeAttribute('textLength');
       tspan.removeAttribute('lengthAdjust');
@@ -401,9 +456,10 @@ export async function copyElementAsFigmaSvg(target: HTMLElement): Promise<void> 
 
   try {
     const shadowTargets = collectShadowTargets(clone);
+    const textAnchors = detectTextAnchors(clone);
     const svgDocument = elementToSVG(clone);
     await inlineResources(svgDocument.documentElement);
-    fixTextGeometry(svgDocument);
+    fixTextGeometry(svgDocument, textAnchors);
     fixOverflowMasks(svgDocument);
     splitBorderStrokes(svgDocument);
     applyBoxShadows(svgDocument, shadowTargets);
