@@ -9,6 +9,8 @@
  * - button: 라벨이 엉뚱한 위치로 간다 - 같은 스타일의 div로 치환하고 내용물을 옮긴다
  * - checkbox/radio: 기본 value "on"이 텍스트로 샌다 - 박스를 도형으로 그리고 체크·점을 직접 넣는다
  * - 스피너: border 회전 트릭이라 호가 안 그려진다 - SVG 원호로 치환
+ * - 텍스트 y 좌표: 변환기는 dominant-baseline="text-after-edge"로 좌표를 잡는데 Figma는 이 속성을
+ *   무시하고 y를 베이스라인으로 해석한다(라벨이 아래로 밀림) - 베이스라인 기준 좌표로 재계산
  * - 데모의 복사 버튼·테스트 전용 UI([data-figma-exclude])는 결과물에서 제거
  */
 
@@ -60,6 +62,28 @@ function createSpinnerArc(size: number, trackColor: string, headColor: string): 
   svg.appendChild(track);
   svg.appendChild(head);
   return svg;
+}
+
+/**
+ * text-after-edge(글자 상자 바닥) 기준 y를 베이스라인 기준으로 바꾼다.
+ * 폰트별 descent를 캔버스로 실측해서 y에서 빼고, Figma가 무시하는 속성은 제거한다.
+ */
+function fixTextBaselines(svgDocument: Document): void {
+  const ctx = document.createElement('canvas').getContext('2d');
+  if (!ctx) return;
+  svgDocument.querySelectorAll('text[dominant-baseline="text-after-edge"]').forEach((text) => {
+    const fontStyle = text.getAttribute('font-style') ?? 'normal';
+    const fontWeight = text.getAttribute('font-weight') ?? '400';
+    const fontSize = text.getAttribute('font-size') ?? '16px';
+    const fontFamily = text.getAttribute('font-family') ?? 'sans-serif';
+    ctx.font = `${fontStyle} ${fontWeight} ${fontSize} ${fontFamily}`;
+    const descent = ctx.measureText('Mg').fontBoundingBoxDescent;
+    text.removeAttribute('dominant-baseline');
+    text.querySelectorAll('tspan[y]').forEach((tspan) => {
+      const y = Number.parseFloat(tspan.getAttribute('y') ?? '0');
+      tspan.setAttribute('y', String(Math.round((y - descent) * 100) / 100));
+    });
+  });
 }
 
 export async function copyElementAsFigmaSvg(target: HTMLElement): Promise<void> {
@@ -179,6 +203,7 @@ export async function copyElementAsFigmaSvg(target: HTMLElement): Promise<void> 
   try {
     const svgDocument = elementToSVG(clone);
     await inlineResources(svgDocument.documentElement);
+    fixTextBaselines(svgDocument);
     const svgText = new XMLSerializer().serializeToString(svgDocument);
     await navigator.clipboard.writeText(svgText);
   } finally {
