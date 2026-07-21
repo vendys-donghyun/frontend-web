@@ -391,6 +391,7 @@ export async function copyElementAsFigmaSvg(target: HTMLElement): Promise<void> 
     // 버튼: 스타일을 복사한 div로 바꾸고 내용물(라벨·아이콘)은 그대로 옮긴다
     if (source instanceof HTMLButtonElement) {
       const box = cloneStyledBox(source);
+      box.className = source.className || 'button'; // Figma 레이어 이름이 클래스명에서 나온다
       while (cloneEl.firstChild) box.appendChild(cloneEl.firstChild);
       cloneEl.replaceWith(box);
       return;
@@ -402,6 +403,7 @@ export async function copyElementAsFigmaSvg(target: HTMLElement): Promise<void> 
       if (cs.width === '0px' || cs.opacity === '0') return;
 
       const box = cloneStyledBox(source);
+      box.className = source.type === 'radio' ? 'vd-radio' : 'vd-checkbox';
       box.style.display = 'flex';
       box.style.alignItems = 'center';
       box.style.justifyContent = 'center';
@@ -426,6 +428,7 @@ export async function copyElementAsFigmaSvg(target: HTMLElement): Promise<void> 
 
     // 텍스트 계열 input/textarea
     const box = cloneStyledBox(source);
+    box.className = source.className || 'input';
     box.style.display = 'flex';
     box.style.alignItems = 'center';
     // overflow hidden은 마스크로 변환되며 테두리 바깥 절반을 잘라먹는다 - 플레이스홀더는 넘칠 일이 없다
