@@ -101,6 +101,39 @@ function fixTextGeometry(svgDocument: Document): void {
   });
 }
 
+/**
+ * overflow hidden이 만든 마스크를 보정한다.
+ * 변환기의 마스크는 테두리 상자와 크기가 같고 모서리 둥글기가 없어서, 가운데 정렬된
+ * 테두리 stroke의 바깥 절반과 둥근 모서리를 잘라먹는다 - 테두리 두께만큼 키우고 둥글기를 맞춘다.
+ */
+function fixOverflowMasks(svgDocument: Document): void {
+  svgDocument.querySelectorAll('mask').forEach((mask) => {
+    const maskRect = mask.querySelector('rect');
+    if (!maskRect || mask.children.length !== 1) return;
+
+    const id = mask.getAttribute('id');
+    const owner = id ? svgDocument.querySelector(`g[mask="url(#${id})"]`) : null;
+    const borderRect = owner?.querySelector('g[data-stacking-layer="rootBackgroundAndBorders"] > rect') ?? null;
+    const strokeWidth = Number.parseFloat(borderRect?.getAttribute('stroke-width') ?? '') || 1;
+    const grow = Math.ceil(strokeWidth);
+
+    const x = Number.parseFloat(maskRect.getAttribute('x') ?? '0');
+    const y = Number.parseFloat(maskRect.getAttribute('y') ?? '0');
+    const w = Number.parseFloat(maskRect.getAttribute('width') ?? '0');
+    const h = Number.parseFloat(maskRect.getAttribute('height') ?? '0');
+    maskRect.setAttribute('x', String(x - grow));
+    maskRect.setAttribute('y', String(y - grow));
+    maskRect.setAttribute('width', String(w + grow * 2));
+    maskRect.setAttribute('height', String(h + grow * 2));
+
+    const rx = Number.parseFloat(borderRect?.getAttribute('rx') ?? '');
+    if (Number.isFinite(rx) && rx > 0) {
+      maskRect.setAttribute('rx', String(rx + grow));
+      maskRect.setAttribute('ry', String(rx + grow));
+    }
+  });
+}
+
 export async function copyElementAsFigmaSvg(target: HTMLElement): Promise<void> {
   const { elementToSVG, inlineResources } = await import('dom-to-svg');
 
@@ -190,7 +223,8 @@ export async function copyElementAsFigmaSvg(target: HTMLElement): Promise<void> 
     const box = cloneStyledBox(source);
     box.style.display = 'flex';
     box.style.alignItems = 'center';
-    box.style.overflow = 'hidden';
+    // overflow hidden은 마스크로 변환되며 테두리 바깥 절반을 잘라먹는다 - 플레이스홀더는 넘칠 일이 없다
+    box.style.overflow = 'visible';
 
     const value = (source as HTMLInputElement | HTMLTextAreaElement).value;
     const isDate = source instanceof HTMLInputElement && source.type === 'date';
@@ -219,6 +253,7 @@ export async function copyElementAsFigmaSvg(target: HTMLElement): Promise<void> 
     const svgDocument = elementToSVG(clone);
     await inlineResources(svgDocument.documentElement);
     fixTextGeometry(svgDocument);
+    fixOverflowMasks(svgDocument);
     const svgText = new XMLSerializer().serializeToString(svgDocument);
     await navigator.clipboard.writeText(svgText);
   } finally {
