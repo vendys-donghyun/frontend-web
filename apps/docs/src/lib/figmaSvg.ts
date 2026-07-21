@@ -84,6 +84,10 @@ function fixTextGeometry(svgDocument: Document): void {
     const isAfterEdge = text.getAttribute('dominant-baseline') === 'text-after-edge';
     text.removeAttribute('dominant-baseline');
     text.setAttribute('text-anchor', 'middle');
+    // Figma에 Variable판이 없으면 엉뚱한 글꼴로 대체돼 세로 위치가 어긋난다 - static Pretendard 우선
+    if (fontFamily.includes('Pretendard')) {
+      text.setAttribute('font-family', "Pretendard, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif");
+    }
 
     text.querySelectorAll('tspan').forEach((tspan) => {
       if (isAfterEdge && tspan.hasAttribute('y')) {
@@ -132,6 +136,113 @@ function fixOverflowMasks(svgDocument: Document): void {
       maskRect.setAttribute('ry', String(rx + grow));
     }
   });
+}
+
+interface ShadowTarget {
+  tag: string;
+  ordinal: number;
+  shadow: string;
+}
+
+/** 마운트된 클론에서 box-shadow를 가진 요소를 태그별 순번과 함께 수집한다 */
+function collectShadowTargets(clone: HTMLElement): ShadowTarget[] {
+  const targets: ShadowTarget[] = [];
+  const counters = new Map<string, number>();
+  [clone, ...Array.from(clone.querySelectorAll<HTMLElement>('*'))].forEach((el) => {
+    const tag = el.tagName.toLowerCase();
+    const ordinal = (counters.get(tag) ?? 0) + 1;
+    counters.set(tag, ordinal);
+    if (!(el instanceof HTMLElement)) return;
+    const shadow = getComputedStyle(el).boxShadow;
+    if (shadow && shadow !== 'none') targets.push({ tag, ordinal, shadow });
+  });
+  return targets;
+}
+
+/** computed box-shadow 문자열을 색·오프셋·블러 목록으로 파싱한다 (inset 제외) */
+function parseBoxShadows(value: string): Array<{ color: string; dx: number; dy: number; blur: number }> {
+  const parts: string[] = [];
+  let depth = 0;
+  let current = '';
+  for (const ch of value) {
+    if (ch === '(') depth += 1;
+    if (ch === ')') depth -= 1;
+    if (ch === ',' && depth === 0) {
+      parts.push(current);
+      current = '';
+    } else {
+      current += ch;
+    }
+  }
+  parts.push(current);
+
+  const shadows: Array<{ color: string; dx: number; dy: number; blur: number }> = [];
+  for (const part of parts) {
+    if (!part.trim() || part.includes('inset')) continue;
+    const color = part.match(/rgba?\([^)]*\)|#[0-9a-fA-F]+/)?.[0] ?? 'rgba(0,0,0,0.1)';
+    const nums = (part.replace(color, '').match(/-?[\d.]+/g) ?? []).map(Number);
+    const [dx = 0, dy = 0, blur = 0] = nums;
+    shadows.push({ color, dx, dy, blur });
+  }
+  return shadows;
+}
+
+/**
+ * box-shadow를 SVG 필터(feDropShadow)로 옮긴다 - Figma가 드롭 섀도 효과로 가져간다.
+ * 변환기 출력의 g[data-tag]는 클론의 요소와 태그별 등장 순서가 같다는 점으로 짝을 찾는다.
+ */
+function applyBoxShadows(svgDocument: Document, targets: ShadowTarget[]): void {
+  if (targets.length === 0) return;
+  const root = svgDocument.documentElement;
+  let defs = svgDocument.querySelector('defs');
+  if (!defs) {
+    defs = svgDocument.createElementNS(SVG_NS, 'defs');
+    root.insertBefore(defs, root.firstChild);
+  }
+
+  const groupByKey = new Map<string, Element>();
+  const counters = new Map<string, number>();
+  svgDocument.querySelectorAll('g[data-tag]').forEach((group) => {
+    const tag = group.getAttribute('data-tag') ?? '';
+    const ordinal = (counters.get(tag) ?? 0) + 1;
+    counters.set(tag, ordinal);
+    groupByKey.set(`${tag}:${ordinal}`, group);
+  });
+
+  let filterId = 0;
+  for (const target of targets) {
+    const group = groupByKey.get(`${target.tag}:${target.ordinal}`);
+    const rect = group?.querySelector(':scope > g[data-stacking-layer="rootBackgroundAndBorders"] > rect');
+    if (!group || !rect) continue;
+    const shadows = parseBoxShadows(target.shadow);
+    if (shadows.length === 0) continue;
+
+    filterId += 1;
+    const filter = svgDocument.createElementNS(SVG_NS, 'filter');
+    filter.setAttribute('id', `fig-shadow-${filterId}`);
+    filter.setAttribute('x', '-100%');
+    filter.setAttribute('y', '-100%');
+    filter.setAttribute('width', '300%');
+    filter.setAttribute('height', '300%');
+    for (const s of shadows) {
+      const drop = svgDocument.createElementNS(SVG_NS, 'feDropShadow');
+      drop.setAttribute('dx', String(s.dx));
+      drop.setAttribute('dy', String(s.dy));
+      drop.setAttribute('stdDeviation', String(s.blur / 2));
+      drop.setAttribute('flood-color', s.color);
+      filter.appendChild(drop);
+    }
+    defs.appendChild(filter);
+
+    if (group.hasAttribute('mask')) {
+      // 마스크가 그림자를 잘라먹으므로, 그림자 전용 사각형을 마스크 밖 형제로 깐다
+      const ghost = rect.cloneNode(false) as Element;
+      ghost.setAttribute('filter', `url(#fig-shadow-${filterId})`);
+      group.parentNode?.insertBefore(ghost, group);
+    } else {
+      rect.setAttribute('filter', `url(#fig-shadow-${filterId})`);
+    }
+  }
 }
 
 export async function copyElementAsFigmaSvg(target: HTMLElement): Promise<void> {
@@ -250,10 +361,12 @@ export async function copyElementAsFigmaSvg(target: HTMLElement): Promise<void> 
   await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
 
   try {
+    const shadowTargets = collectShadowTargets(clone);
     const svgDocument = elementToSVG(clone);
     await inlineResources(svgDocument.documentElement);
     fixTextGeometry(svgDocument);
     fixOverflowMasks(svgDocument);
+    applyBoxShadows(svgDocument, shadowTargets);
     const svgText = new XMLSerializer().serializeToString(svgDocument);
     await navigator.clipboard.writeText(svgText);
   } finally {
