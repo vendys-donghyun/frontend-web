@@ -20,6 +20,7 @@ import {
   Tabs,
   Toast,
   type DataGridColumn,
+  Logo,
 } from '@vendys/ui';
 import { copyElementAsFigmaSvg } from '../lib/figmaSvg';
 
@@ -80,6 +81,13 @@ export function FigmaKit() {
         </Button>
       </div>
       <div ref={boardRef} className="figma-kit">
+        <Section title="Logo">
+          <Logo size={16} />
+          <Logo size={24} />
+          <Logo size={32} />
+          <Logo size={24} wordmark />
+        </Section>
+
         <Section title="Button">
           <Button>저장</Button>
           <Button variant="weak">더 보기</Button>

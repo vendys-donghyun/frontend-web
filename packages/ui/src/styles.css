@@ -470,6 +470,17 @@
   gap: 8px;
 }
 
+/* ---------- 로고 ---------- */
+.vd-logo { display: inline-flex; align-items: center; }
+.vd-logo__wordmark {
+  font-family: var(--vd-font);
+  font-weight: 700;
+  /* 주변 글자색을 따른다 - 어두운 배경에서는 감싸는 요소에 흰색을 준다 */
+  color: inherit;
+  letter-spacing: var(--vd-letter-spacing);
+  line-height: 1;
+}
+
 /* ---------- 스피너 (단독 로딩 표시) ---------- */
 .vd-spinner {
   display: inline-block;

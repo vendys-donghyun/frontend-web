@@ -22,3 +22,4 @@ export { DatePicker, type DatePickerProps } from './DatePicker';
 export { FileUpload, type FileUploadProps } from './Upload';
 export { Form, FormActions, type FormProps } from './Form';
 export { DataGrid, type DataGridProps, type DataGridColumn, type DataGridSort } from './DataGrid';
+export { Logo, type LogoProps } from './Logo';

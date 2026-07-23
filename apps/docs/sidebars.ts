@@ -65,7 +65,7 @@ const sidebars: SidebarsConfig = {
           type: 'category',
           label: 'Misc',
           collapsible: false,
-          items: ['components/icon', 'components/badge', 'components/breadcrumb'],
+          items: ['components/icon', 'components/logo', 'components/badge', 'components/breadcrumb'],
         },
       ],
     },

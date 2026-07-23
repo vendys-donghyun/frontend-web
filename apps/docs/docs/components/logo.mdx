@@ -1,0 +1,47 @@
+---
+id: logo
+title: Logo
+sidebar_position: 11
+---
+
+import { Logo } from '@vendys/ui';
+
+# Logo
+
+현대벤디스 심볼 로고입니다. 브랜드 그린 `#1DB53A`는 로고 전용 색이며
+버튼·배지 같은 UI 요소에는 쓰지 않습니다 (UI 초록은 `--vd-primary`).
+
+<div className="demo">
+  <Logo size={16} />
+  <Logo size={24} />
+  <Logo size={32} />
+  <Logo size={24} wordmark />
+</div>
+
+어두운 배경 위에서는 흰색 반전만 허용합니다.
+
+<div className="demo" style={{ background: '#1e2022' }}>
+  <Logo size={24} color="#ffffff" />
+  <span style={{ color: '#fff' }}><Logo size={24} color="#ffffff" wordmark /></span>
+</div>
+
+```tsx
+<Logo />
+<Logo size={32} />
+<Logo size={24} wordmark />
+<Logo size={24} color="#ffffff" />  {/* 어두운 배경 전용 */}
+```
+
+## Props
+
+| prop | 타입 | 기본값 | 설명 |
+|---|---|---|---|
+| `size` | `number` | `24` | 심볼 높이(px). 최소 16 권장 |
+| `wordmark` | `boolean` | `false` | 심볼 옆에 워드마크(현대벤디스) 표시 |
+| `color` | `string` | 브랜드 그린 | 어두운 배경 위 흰색 반전 용도로만 |
+
+## Guidelines
+
+- 왜곡·회전·그림자·임의 색 변경 금지
+- 주변 여백은 심볼 높이의 1/2 이상 확보
+- 워드마크 텍스트는 700 고정, 색은 주변 글자색을 따름
