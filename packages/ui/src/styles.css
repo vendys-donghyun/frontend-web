@@ -472,6 +472,7 @@
 
 /* ---------- 로고 ---------- */
 .vd-logo { display: inline-flex; align-items: center; }
+.vd-logo svg { display: block; }
 .vd-logo__wordmark {
   font-family: var(--vd-font);
   font-weight: 700;
