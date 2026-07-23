@@ -9,7 +9,7 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: '디자인 토큰',
       collapsed: false,
-      items: ['tokens/colors', 'tokens/typography', 'tokens/spacing', 'tokens/motion'],
+      items: ['tokens/colors', 'tokens/typography', 'tokens/spacing', 'tokens/motion', 'tokens/logo'],
     },
     {
       type: 'category',
@@ -65,7 +65,7 @@ const sidebars: SidebarsConfig = {
           type: 'category',
           label: 'Misc',
           collapsible: false,
-          items: ['components/icon', 'components/logo', 'components/badge', 'components/breadcrumb'],
+          items: ['components/icon', 'components/badge', 'components/breadcrumb'],
         },
       ],
     },
